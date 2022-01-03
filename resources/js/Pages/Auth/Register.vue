@@ -5,12 +5,13 @@
 
     <form @submit.prevent="submit">
         <div>
-            <BreezeLabel for="first_name" value="First Name" />
+            <BreezeLabel for="first_name" value="Primer Nombre" />
             <BreezeInput id="first_name" type="text" class="mt-1 block w-full" v-model="form.first_name" required autofocus autocomplete="first_name" />
         </div>
+
         <div>
-            <BreezeLabel for="last_name" value="Last Name" />
-            <BreezeInput id="last_name" type="text" class="mt-1 block w-full" v-model="form.last_name" required autofocus autocomplete="last_name" />
+            <BreezeLabel for="first_name" value="Apellido" />
+            <BreezeInput id="first_name" type="text" class="mt-1 block w-full" v-model="form.last_name" required autofocus autocomplete="last_name" />
         </div>
 
         <div class="mt-4">

@@ -44,6 +44,12 @@
                                         <BreezeDropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </BreezeDropdownLink>
+                                        <BreezeDropdownLink :href="route('users.index')" as="button">
+                                            List User
+                                        </BreezeDropdownLink>
+                                        <BreezeDropdownLink :href="route('dashboard')"  as="button">
+                                            Dashboard
+                                        </BreezeDropdownLink>
                                     </template>
                                 </BreezeDropdown>
                             </div>
@@ -79,6 +85,12 @@
                         <div class="mt-3 space-y-1">
                             <BreezeResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
+                            </BreezeResponsiveNavLink>
+                            <BreezeResponsiveNavLink :href="route('users.index')" method="post" as="button">
+                                List User
+                            </BreezeResponsiveNavLink>
+                            <BreezeResponsiveNavLink :href="route('dashboard')" method="post" as="button">
+                                Dashboard
                             </BreezeResponsiveNavLink>
                         </div>
                     </div>

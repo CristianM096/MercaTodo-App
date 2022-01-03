@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
+use Inertia\Inertia;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Redirect;
 class UserController extends Controller
 {
     /**
@@ -14,12 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        
         $users = User::all();
-        return view('users/index',compact('users'));
-        
-        //return redirect()->intended(RouteServiceProvider::HOME);
-        
+        return Inertia::render('Users/index',['users' => $users]);
     }
 
     /**
@@ -29,7 +28,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -62,19 +60,23 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::whereId($id)->firstOrFail();
+        //dd($user);
+        return Inertia::render('Users/edit',['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  User  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::whereId($id)->firstOrFail();
+        $user->update($request->all());
+        return Redirect::route('users.index')->with('info','Se actualizó el usuario correctamente');
     }
 
     /**

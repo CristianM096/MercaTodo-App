@@ -28,6 +28,9 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
+//Route::middleware(['auth', 'verified'])->get('/users/index', [UserController::class, 'index'])->name('users.index');
+//Route::middleware(['auth', 'verified'])->get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+//Route::middleware(['auth', 'verified'])->post('/users/update', [UserController::class, 'update'])->name('users.update');
+Route::resource('users',UserController::class)->middleware(['auth','verified']);
 
 require __DIR__.'/auth.php';
