@@ -18,8 +18,8 @@
                                 <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard2
+                                <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
+                                    Listar Usuarios
                                 </BreezeNavLink>
                             </div>
                         </div>
@@ -43,6 +43,12 @@
                                     <template #content>
                                         <BreezeDropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
+                                        </BreezeDropdownLink>
+                                        <BreezeDropdownLink :href="route('users.index')" as="button">
+                                            List User
+                                        </BreezeDropdownLink>
+                                        <BreezeDropdownLink :href="route('dashboard')"  as="button">
+                                            Dashboard
                                         </BreezeDropdownLink>
                                     </template>
                                 </BreezeDropdown>
@@ -79,6 +85,12 @@
                         <div class="mt-3 space-y-1">
                             <BreezeResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
+                            </BreezeResponsiveNavLink>
+                            <BreezeResponsiveNavLink :href="route('users.index')" method="post" as="button">
+                                List User
+                            </BreezeResponsiveNavLink>
+                            <BreezeResponsiveNavLink :href="route('dashboard')" method="post" as="button">
+                                Dashboard
                             </BreezeResponsiveNavLink>
                         </div>
                     </div>
