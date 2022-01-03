@@ -46,8 +46,12 @@
                                     <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                     {{user.email}}
                                     </td>
-                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400" v-if="user.active"> activo </td>
-                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400" v-if="!user.active"> inactivo </td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400" v-if="user.active"> 
+                                        <p class="text-lime-400">activo</p> 
+                                    </td>
+                                    <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400" v-if="!user.active">
+                                        <p class="text-red-500">inactivo</p> 
+                                    </td>
                                     <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
                                         <a :href="route('users.edit', user.id )" class="text-blue-600 hover:text-blue-900 dark:text-blue-500 dark:hover:underline">Actualizar</a>
                                     </td>   
