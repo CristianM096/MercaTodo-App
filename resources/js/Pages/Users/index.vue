@@ -7,6 +7,7 @@
                 Lista de Usuarios
             </h2>
         </template>
+        
      <div class="py-12">
         <div class="mx-8 my-8">
             <div class="flex flex-col">
@@ -54,7 +55,7 @@
                                     </td>
                                     <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
                                         <a :href="route('users.edit', user.id )" class="text-blue-600 hover:text-blue-900 dark:text-blue-500 dark:hover:underline">Actualizar</a>
-                                    </td>   
+                                    </td>  
                     
                                 
                                 </tr>
