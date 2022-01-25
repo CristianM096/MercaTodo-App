@@ -6,7 +6,16 @@
                 Actualizar Usuario
             </h2>
         </template>
+
+        
         <div class="py-6">
+            <div class="alert alert-danger" v-if="{errors}">
+                <div v-for="($error,index) in errors" :key="index">
+                    <ul>
+                        <li>{{$error}}</li>
+                    </ul>
+                </div>
+            </div>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
@@ -55,6 +64,7 @@ import BreezeCheckbox from '@/Components/Checkbox.vue'
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
 import { Head, Link } from '@inertiajs/inertia-vue3';
 
+
 export default {
 
     components: {
@@ -68,7 +78,7 @@ export default {
         Link,
     },
 
-    props:['user'],
+    props:['user','errors'],
     data() {
         return {
             form: this.$inertia.form({
@@ -80,7 +90,6 @@ export default {
             })
         }
     },
-
 
     methods: {
         submit() {

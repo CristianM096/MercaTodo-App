@@ -5,17 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
+use Facade\Ignition\ErrorPage\Renderer;
 use Inertia\Inertia;
+use Inertia\Response;
 use Illuminate\Validation\Rules;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index():Response
     {
         $users = User::all();
         return Inertia::render('Users/index',['users' => $users]);
@@ -49,33 +47,24 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('user.show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(User $user):Response
     {
-        $user = User::whereId($id)->firstOrFail();
-        //dd($user);
         return Inertia::render('Users/edit',['user' => $user]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  User  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user):RedirectResponse
     {
-        $user = User::whereId($id)->firstOrFail();
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'telephone'=> 'digits:10|nullable',
+            'active' => 'required|boolean',
+        ]);
+
         $user->update($request->all());
+        //dd(Redirect::route('users.index')->with('info','Se actualizó el usuario correctamente'));
         return Redirect::route('users.index')->with('info','Se actualizó el usuario correctamente');
     }
 
