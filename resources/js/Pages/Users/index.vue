@@ -1,4 +1,4 @@
-    <template>
+<template>
     <Head title="List Users" />
 
     <BreezeAuthenticatedLayout>

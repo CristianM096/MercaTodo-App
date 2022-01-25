@@ -7,7 +7,6 @@ use Spatie\Permission\Models\Role;
 use Inertia\Testing\Assert;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 
@@ -16,7 +15,7 @@ class UpdateTest extends TestCase
 {
     
     use RefreshDatabase;
-
+    /** @test */
     public function testAUserNotAutenticatedCanNotUpdatedUser(){
         Role::create(['name' => 'Client']);
         $user = User::factory()->create()->assignRole('Client');
@@ -24,7 +23,7 @@ class UpdateTest extends TestCase
         $response->assertRedirect(route('login'));
         $response->assertStatus(302);
     }
-
+    /** @test */
     public function testAUserClientAutenticatedCanNotUpdatedUser(){
         Role::create(['name' => 'Client']);
         $user1 = User::factory()->create()->assignRole('Client');
@@ -34,7 +33,7 @@ class UpdateTest extends TestCase
         $response->assertStatus(403);
         $response->assertSee('User does not have the right roles.');
     }
-
+    /** @test */
     public function testAUserAdminAutenticatedCanSeeViewEditUser(){
         Role::create(['name' => 'Client']);
         Role::create(['name' => 'Admin']);
@@ -51,7 +50,7 @@ class UpdateTest extends TestCase
             )
         );        
     }
-    
+    /** @test */
     public function testAUserAdminAutenticatedCanUpdatedUser(){
         Role::create(['name' => 'Client']);
         Role::create(['name' => 'Admin']);
@@ -76,6 +75,6 @@ class UpdateTest extends TestCase
         $this->assertEquals($ddbb_User['active'],'0');
         $response->assertRedirect(route('users.index'));
         $response->assertStatus(302);
-        
+
     }
 }
