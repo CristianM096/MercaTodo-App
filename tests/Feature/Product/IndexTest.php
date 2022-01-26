@@ -14,13 +14,19 @@ class IndexTest extends TestCase
 
     public function testAUserNotAutenticatedCanListProducts()
     {
-        $this->withoutExceptionHandling();
-        $product = Product::factory(10)->create();
+        //$this->withoutExceptionHandling();
+        Product::factory(9)->create();
         $response = $this->get(route('products.index'));
         $response->assertInertia(fn (Assert $page)=> $page
             ->component('Product/index')
-            ->has('products',10)
+            ->has('products', fn (Assert $page)=> $page
+                ->where('total',9)
+                ->where('last_page',2)
+                ->has('data',5)
+                ->etc()
+            )
         );
+        
         $response->assertStatus(200);
     }
 }

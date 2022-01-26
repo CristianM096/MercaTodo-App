@@ -21,6 +21,9 @@
                                 <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
                                     Listar Usuarios
                                 </BreezeNavLink>
+                                <BreezeNavLink :href="route('products.index')" :active="route().current('products.index')">
+                                    Listar Productos
+                                </BreezeNavLink>
                             </div>
                         </div>
 
@@ -46,6 +49,9 @@
                                         </BreezeDropdownLink>
                                         <BreezeDropdownLink :href="route('users.index')" as="button">
                                             List User
+                                        </BreezeDropdownLink>
+                                        <BreezeDropdownLink :href="route('products.index')" as="button">
+                                            List Products
                                         </BreezeDropdownLink>
                                         <BreezeDropdownLink :href="route('dashboard')"  as="button">
                                             Dashboard
