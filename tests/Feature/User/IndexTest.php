@@ -17,14 +17,14 @@ use Tests\TestCase;
 class IndexTest extends TestCase
 {
     use RefreshDatabase;
-
+    /** @test */
     public function testAUserNotAutenticatedCanNotListUsers()
     {
         $response = $this->get(route('users.index'));
         $response->assertRedirect(route('login'));
         $response->assertStatus(302);
     }
-
+    /** @test */
     public function testAUserClientAutenticatedCanNotListUsers()
     {
         Role::create(['name' => 'Client']);
@@ -34,7 +34,7 @@ class IndexTest extends TestCase
         $response->assertStatus(403);
         $response->assertSee('User does not have the right roles.');
     }
-
+    /** @test */
     public function testAUserAdminAutenticatedCanListUsers()
     {
         $this->withoutExceptionHandling();

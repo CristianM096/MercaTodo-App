@@ -15,11 +15,20 @@
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <BreezeNavLink :href="route('dashboard')" :active="route().current('Dashboard')">
                                     Dashboard
                                 </BreezeNavLink>
                                 <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
                                     Listar Usuarios
+                                </BreezeNavLink>
+                                <BreezeNavLink :href="route('products.index')" :active="route().current('products.index')">
+                                    Listar Productos
+                                </BreezeNavLink>
+                                <BreezeNavLink :href="route('products.create')" :active="route().current('products.create')">
+                                    Crear Productos
+                                </BreezeNavLink>
+                                <BreezeNavLink :href="route('products.show')" :active="route().current('products.show')">
+                                    Home
                                 </BreezeNavLink>
                             </div>
                         </div>
@@ -46,6 +55,12 @@
                                         </BreezeDropdownLink>
                                         <BreezeDropdownLink :href="route('users.index')" as="button">
                                             List User
+                                        </BreezeDropdownLink>
+                                        <BreezeDropdownLink :href="route('products.index')" as="button">
+                                            List Products
+                                        </BreezeDropdownLink>
+                                        <BreezeDropdownLink :href="route('products.create')" as="button">
+                                            Create Products
                                         </BreezeDropdownLink>
                                         <BreezeDropdownLink :href="route('dashboard')"  as="button">
                                             Dashboard
