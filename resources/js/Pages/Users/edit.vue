@@ -43,9 +43,9 @@
                                 <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                                     Actualizar
                                 </BreezeButton>
-                                <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :href="route('users.index', user.id )">
+                                <Link class="ml-4 bg-red-700 px-4 py-1 text-white bg-red-500 rounded shadow-xl" :disabled="true" :href="route('users.index', user.id )">
                                     Cancelar
-                                </BreezeButton>
+                                </Link>
                             </div>
                         </form>
                     </div>

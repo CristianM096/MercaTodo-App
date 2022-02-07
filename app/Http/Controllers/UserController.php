@@ -11,6 +11,7 @@ use Inertia\Response;
 use Illuminate\Validation\Rules;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
+
 class UserController extends Controller
 {
     public function index():Response
@@ -26,6 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        
     }
 
     /**

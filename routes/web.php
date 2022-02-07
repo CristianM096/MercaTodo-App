@@ -31,8 +31,15 @@ Route::get('/dashboard', function () {
 
 Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('users', UserController::class)->middleware(['auth', 'verified']);
+    Route::resource('products',ProductController::class,[
+        'except' => ['show']]
+    )->middleware(['auth','verified']);
+
 });
 
-Route::resource('products',ProductController::class);
+
+Route::get('/products/show', [ProductController::class, 'show'])->name('products.show')->middleware((['auth','verified']));
+
+
 
 require __DIR__.'/auth.php';
