@@ -58,6 +58,7 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product):RedirectResponse
     {
+        /*
         $request->validate([
             'name' => 'string|max:255',
             'price' => 'between:0,99999999.99',
@@ -68,13 +69,23 @@ class ProductController extends Controller
             'weight' => 'between:0,9999.99',
             'size' => 'string|max:100',
             'active' => 'boolean'
-        ]);
+        ]);*/
 
-        $product->update($request->except(['photo']));
+        $product->update([
+            'name' => $request['form']['name'],
+            'price' => $request['form']['price'],
+            //'photo' => $request['form']['photo'],
+            'description' => $request['form']['description'],
+            'stock' => $request['form']['stock'],
+            'color' => $request['form']['color'],
+            'weight' => $request['form']['weight'],
+            'size' => $request['form']['size'],
+            'active' => $request['form']['active'],
+        ]);
         
-        if($request->hasFile('photo'))
+        if($request->hasFile('form'))
         {
-            $photo = $request->photo;
+            $photo = $request['form']['photo'];
             $namePhoto = (string)Str::uuid().'.'.$photo->getClientOriginalExtension();
             $photo->storeAs('public/productImages',$namePhoto);
             Storage::delete('public/productImages/'.$product->getImageName());
@@ -100,7 +111,6 @@ class ProductController extends Controller
         $photo = $request->photo;
         $namePhoto = (string)Str::uuid().'.'.$photo->getClientOriginalExtension();
         
-        //dd($namePhoto);
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,

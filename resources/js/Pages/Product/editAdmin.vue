@@ -146,20 +146,12 @@ export default {
             this.$inertia.post(this.route('products.update',this.$props.product),
                 {
                     _method: 'put',
-                    photo: this.form.photo
+                    photo: this.form.photo,
+                    form: this.form
                 }
             )
 
-        },/*
-        viewImage: function(){
-            $('image').change(function(){
-                let reader = new FileReader();
-                reader.onload = (e)=>{
-                    $('imageSelected').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
-            });
-        },*/
+        },
     }
 }
 </script>
