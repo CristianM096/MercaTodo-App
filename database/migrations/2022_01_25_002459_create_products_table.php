@@ -21,7 +21,8 @@ class CreateProductsTable extends Migration
             $table->string('description',100);
             $table->unsignedInteger('stock');
             $table->string('color',30);
-            $table->decimal('weight',7,3);
+            $table->decimal('weight',7,2);
+            $table->boolean('active')->default(true);
             $table->string('size',20);
             $table->timestamps();
         });
