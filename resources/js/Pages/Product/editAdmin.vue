@@ -52,11 +52,23 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-2">
-                    <div class="w-full md:w-2/3 px-3 mb-6 md:mb-0">
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-size">
                             Dimensiones
                         </label>
                         <input class="appearance-none block w-full bg-gray-200 text-gray-700 bor/der border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-size" type="text" placeholder="20cmx40cmx80cm" v-model="form.size">
+                    </div>
+                    <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-category">
+                            Categoría
+                        </label>
+                        <div class="relative">
+                            <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-category" v-model="form.category">
+                                
+                                <option v-for="category in categories" :key="category.id" :value="category.id" > {{category.description}}</option>
+                                
+                            </select>
+                        </div>
                     </div>
                     <div class="w-full md:w-1/3 px-3 mt-6 mb-6 md:mb-0">
                         <input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" id="checkbox" v-model="form.active">
@@ -68,9 +80,9 @@
                 <div class="grid grid-cols-1 mt-5 mx-7" v-if="preview">
                     <img v-bind:src=" preview " class="img-responsive object-cover h-20 w-20" >
                 </div>
-                <div class="flex justify-center mt-8">
-                    <div class="rounded-lg shadow-xl bg-gray-50 lg:w-1/2">
-                        <div class="m-4">
+                <div class="flex flex-wrap -mx-3 mb-2">
+                    <div class="w-full mt-8 md:w-2/3 px-3 mb-6 md:mb-0">
+                        <div class="rounded-lg shadow-xl bg-gray-50 ">
                             <label class="inline-block mb-2 text-gray-500">Upload
                                 Image(jpg,png,svg,jpeg)</label>
                             <div class="flex items-center justify-center w-full">
@@ -92,6 +104,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="w-full mt-8 md:w-1/3 px-3 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-stock">
+                            Descuento
+                        </label>
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-discount" type="number" placeholder="40" v-model="form.discount">
+                    </div>
                 </div>
                 <button type='submit' 
                     class="px-4 py-2 text-white bg-green-500 rounded shadow-xl" 
@@ -112,7 +130,7 @@
 import BreezeButton from '@/Components/Button.vue'
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue'
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import {Head} from '@inertiajs/inertia-vue3';
+import {Head, useForm} from '@inertiajs/inertia-vue3';
 export default {
 
     components: {
@@ -121,10 +139,11 @@ export default {
         BreezeAuthenticatedLayout,
         Head
     },
-    props:['product'],
+    props:['product','categories'],
     data() {
         return {
-            form: this.$inertia.form({
+            form: useForm({
+                _method: 'put',
                 name: this.$props.product.name,
                 price: this.$props.product.price,
                 photo: null,
@@ -135,6 +154,8 @@ export default {
                 active: this.$props.product.active !=0?true:false,
                 size: this.$props.product.size,
                 terms: false,
+                discount: this.$props.product.discount,
+                category: this.$props.product.category.id,
             },{
                 resetOnSuccess: false,
             }),
@@ -143,11 +164,16 @@ export default {
     },
     methods: {
         submit() {
-            this.$inertia.post(this.route('products.update',this.$props.product),
+            this.form.post(this.route('products.update',this.$props.product),
                 {
-                    _method: 'put',
                     photo: this.form.photo,
-                    form: this.form
+                    form: this.form,
+                    onSuccess: ()=>{
+                        Toast.fire({
+                        icon: 'success',
+                        title: 'Actualizado Satisfactoriamente'
+                        })
+                    },
                 }
             )
 

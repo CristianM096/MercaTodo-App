@@ -11,9 +11,9 @@
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-6 border border-blue-700 rounded mt-0 mb-0 ">
                     Crear 
                 </a>
+                
             </div>
         </template>
-            
         <div class="py-12 mt-1">
             
             

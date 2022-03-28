@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Database\Seeder;
 use \App\Models\User;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -14,9 +16,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(RoleSeeder::class);
-        $this->call(UserSeeder::class);
-        User::factory(10)->create();
-        Product::factory(20)->create();
+        $this->call([
+            RoleSeeder::class,
+            AdminSeeder::class,
+            ClientSeeder::class,
+            ProductCategorySeeder::class,
+            ProductSeeder::class,
+            InvoiceSeeder::class,
+        ]);
     }
 }

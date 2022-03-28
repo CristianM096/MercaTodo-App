@@ -15,6 +15,7 @@
 
         <!-- Scripts -->
         @routes
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
@@ -24,5 +25,6 @@
             <script src="http://localhost:8080/js/bundle.js"></script>
         @endenv
         -->
+        
     </body>
 </html>

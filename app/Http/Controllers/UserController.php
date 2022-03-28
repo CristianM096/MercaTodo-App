@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
-    public function index():Response
+    public function index(): Response
     {
         $users = User::all();
-        return Inertia::render('Users/index',['users' => $users]);
+        return Inertia::render('Users/index', ['users' => $users]);
     }
 
     /**
@@ -27,7 +27,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        
     }
 
     /**
@@ -51,12 +50,12 @@ class UserController extends Controller
     {
     }
 
-    public function edit(User $user):Response
+    public function edit(User $user): Response
     {
-        return Inertia::render('Users/edit',['user' => $user]);
+        return Inertia::render('Users/edit', ['user' => $user]);
     }
 
-    public function update(Request $request, User $user):RedirectResponse
+    public function update(Request $request, User $user): RedirectResponse
     {
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
@@ -67,7 +66,7 @@ class UserController extends Controller
 
         $user->update($request->all());
         //dd(Redirect::route('users.index')->with('info','Se actualizó el usuario correctamente'));
-        return Redirect::route('users.index')->with('info','Se actualizó el usuario correctamente');
+        return Redirect::route('users.index')->with('info', 'Se actualizó el usuario correctamente');
     }
 
     /**
