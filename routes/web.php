@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Cart\CartController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,6 +37,12 @@ Route::group(['middleware' => ['role:Admin']], function () {
     )->middleware(['auth','verified']);
 
 });
+
+Route::post('/cart', [CartController::class, 'store'])
+      ->name('cart.store')->middleware((['auth','verified']));
+Route::get('/cart-content', [CartController::class, 'index'])
+      ->name('cart-content.index')->middleware((['auth','verified']));
+Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
 
 
 Route::get('/products/show', [ProductController::class, 'show'])->name('products.show')->middleware((['auth','verified']));
