@@ -46,7 +46,15 @@
         },
         methods:{
             submit(){
-                this.form.post(this.route('cart.store'))
+                this.form.post(this.route('cart.store'),
+                {
+                    onSuccess: ()=>{
+                        Toast.fire({
+                        icon: 'success',
+                        title: 'Producto agregado al Carrito'
+}                       )
+                    }
+                })
             },
             increment(){
                 this.form.quantity++;

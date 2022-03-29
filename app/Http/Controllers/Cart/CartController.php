@@ -13,7 +13,6 @@ class CartController extends Controller
 {
     public function index()
     {
-
         $cartContent = Cart::content();
         return Inertia::render('Cart/index',compact('cartContent'));
     }

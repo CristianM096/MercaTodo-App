@@ -19409,7 +19409,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      this.form.post(this.route('cart.store'));
+      this.form.post(this.route('cart.store'), {
+        onSuccess: function onSuccess() {
+          Toast.fire({
+            icon: 'success',
+            title: 'Producto agregado al Carrito'
+          });
+        }
+      });
     },
     increment: function increment() {
       this.form.quantity++;
@@ -23340,7 +23347,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         )])])]);
       }), 128
       /* KEYED_FRAGMENT */
-      ))])])])]), _hoisted_32])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
+      ))])])])]), _hoisted_32])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.products.links) + " ", 1
+      /* TEXT */
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_pagination, {
         "class": "mt-6 flex justify-center",
         links: $props.products.links
       }, null, 8

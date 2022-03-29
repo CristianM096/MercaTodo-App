@@ -84,7 +84,6 @@ class ProductController extends Controller
         }
         $message = 'Se actualizó el usuario correctamente';
         return Redirect::route('products.index');
-        //return redirect()->route('products.index')->with('message', $message);
     }
 
 
@@ -115,6 +114,5 @@ class ProductController extends Controller
         $message = "Se creó el Producto correctamente";
 
         return Redirect::route('products.index');
-        //return redirect()->route('products.index')->with('message', $message);
     }
 }
