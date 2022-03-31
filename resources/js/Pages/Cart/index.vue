@@ -25,9 +25,11 @@
                         <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
                              <a :href="route('products.show')" type="button">Seguir Comprando</a>
                         </button>
-                        <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                            <a :href="route('cart-content.index')" type="button">Realizar Compra</a>
-                        </button>
+                        <form  @submit.prevent="submit">
+                            <button type="submit" class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+                                Realizar Compra
+                            </button>
+                        </form>
                     </div>
                 </div>
             
@@ -100,7 +102,7 @@
 
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import { Head, Link } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination';
 
 export default {
@@ -110,10 +112,25 @@ export default {
         Link,
         Pagination,
     },
+    data(){
+        return{
+            form: useForm({
+                cartContent: this.$props.cartContent,
+            }),
+        }
+    },
+
+
     props:['cartContent','info'],
     methods:{
         destroy(id) {
+            
             this.$inertia.delete(route("cart.destroy", id));
+            //location. reload();
+            
+        },
+        submit(){
+            this.form.post(route('webcheckout.store'));
         },
     }
 }

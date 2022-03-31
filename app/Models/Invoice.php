@@ -11,6 +11,15 @@ class Invoice extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'total',
+        'reference',
+        'payment_status',
+        'customer_id',
+        'user_id',
+    ];
+
+
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);

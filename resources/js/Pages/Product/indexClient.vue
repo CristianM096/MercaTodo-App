@@ -134,7 +134,7 @@
                     </footer>
                 </div>
             </div>
-            {{products.links}}
+            
             <pagination class="mt-6 flex justify-center" :links="products.links" />
         </div>
     </BreezeAuthenticatedLayout>
@@ -163,7 +163,7 @@ export default {
                 filterCategory: '',
             }),
             myName: '',
-            pageActual: this.$props.products.foreach()
+            //pageActual: this.$props.products.foreach()
         }
     },
     props:['products'],

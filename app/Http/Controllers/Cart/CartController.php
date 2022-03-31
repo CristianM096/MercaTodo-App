@@ -36,10 +36,10 @@ class CartController extends Controller
         $item = Cart::get($rowId);
         if($item->qty==1){
             Cart::remove($rowId);
-            return Redirect::route('cart-content.index');
+            return redirect()->route('cart-content.index');
         }else{
             $item->qty= $item->qty - 1;
-            return Redirect::route('cart-content.index');
+            return redirect()->route('cart-content.index');
         }
 
     }

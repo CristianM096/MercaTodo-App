@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             ProductCategorySeeder::class,
             ProductSeeder::class,
-            InvoiceSeeder::class,
+            //InvoiceSeeder::class,
         ]);
     }
 }
