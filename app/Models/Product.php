@@ -6,14 +6,30 @@ use Facade\Ignition\QueryRecorder\Query;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\ProductCategory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
     use HasFactory;
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
+
+    public function invoice(): BelongsToMany
+    {
+        return $this->belongsToMany(Invoice::class);
+    }
+
+    protected $with = ['category'];
+
     protected $fillable = [
         'name',
         'price',
+        'discount',
         'photo',
         'description',
         'stock',
@@ -21,6 +37,7 @@ class Product extends Model
         'weight',
         'size',
         'active',
+        'category_id',
     ];
     
     public function getPhotoAttribute(){

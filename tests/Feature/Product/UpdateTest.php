@@ -71,8 +71,9 @@ class UpdateTest extends TestCase
             'active'
         ]);
         $ddbb_Product = Product::where('id',$product->id)->first();
-        $this->assertEquals($ddbb_Product->name,$prod['name']);
+        dd($ddbb_Product);
         $this->assertEquals($ddbb_Product->description,$prod['description']);
+        $this->assertEquals($ddbb_Product->name,$prod['name']);
         $this->assertEquals($ddbb_Product->price,$prod['price']);
         $response->assertRedirect(route('products.index'));
         $response->assertStatus(302);
