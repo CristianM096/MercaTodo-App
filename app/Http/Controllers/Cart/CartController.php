@@ -17,7 +17,6 @@ class CartController extends Controller
         return Inertia::render('Cart/index',compact('cartContent'));
     }
 
-
     public function store(Request $request)
     {
         $product = Product::findOrfail($request->input('productId'));
@@ -31,8 +30,14 @@ class CartController extends Controller
         return Redirect::route('products.show');
     }
 
+    public function update(Request $request)
+    {
+        
+    }
+
     public function destroy($rowId)
     {
+        //dd('hola');
         $item = Cart::get($rowId);
         if($item->qty==1){
             Cart::remove($rowId);

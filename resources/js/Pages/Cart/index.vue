@@ -1,6 +1,6 @@
 <template>
     
-
+    <Head title="Carrito de Compra" />
     <BreezeAuthenticatedLayout>
         <template #header>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -23,13 +23,11 @@
             </div>
                     <div class="lg:ml-40 ml-10 space-x-8">
                         <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                             <a :href="route('products.show')" type="button">Seguir Comprando</a>
+                            <a :href="route('products.show')" type="button">Seguir Comprando</a>
                         </button>
-                        <form  @submit.prevent="submit">
-                            <button type="submit" class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                                Realizar Compra
-                            </button>
-                        </form>
+                        <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+                            <a :href="route('webcheckout.index')" type="button">Realizar Compra</a>
+                        </button>
                     </div>
                 </div>
             
@@ -83,9 +81,9 @@
                                         </div>
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <p class="text-gray-900 whitespace-no-wrap">
-                                              <Link @click="destroy(product.rowId)" class="text-red-700">Quitar</Link>
-                                        </p>
+                                        <form @submit.prevent="destroy(product)">
+                                            <button :disabled="form.processing" type="submit" class="px-4 py-2 text-white bg-red-500 rounded shadow-xl">Quitar</button>
+                                        </form>
                                     </td>
 
                                     
@@ -115,7 +113,7 @@ export default {
     data(){
         return{
             form: useForm({
-                cartContent: this.$props.cartContent,
+                productId:'',
             }),
         }
     },
@@ -123,11 +121,8 @@ export default {
 
     props:['cartContent','info'],
     methods:{
-        destroy(id) {
-            
-            this.$inertia.delete(route("cart.destroy", id));
-            //location. reload();
-            
+        destroy($product) {
+            this.form.delete(route("cart.destroy",$product));
         },
         submit(){
             this.form.post(route('webcheckout.store'));

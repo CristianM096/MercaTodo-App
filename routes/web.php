@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Webcheckout\WebcheckoutController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,13 +44,14 @@ Route::group(['middleware' => ['role:Admin']], function () {
 Route::post('/cart', [CartController::class, 'store'])
       ->name('cart.store')->middleware((['auth','verified']));
 Route::get('/cart-content', [CartController::class, 'index'])
-      ->name('cart-content.index')->middleware((['auth','verified','cors']));
+      ->name('cart-content.index')->middleware((['auth','verified']));
 Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
 
-Route::resource('/webcheckout',WebcheckoutController::class)->middleware(['cors']);
+Route::resource('/webcheckout',WebcheckoutController::class);
 
 Route::get('/products/show', [ProductController::class, 'show'])->name('products.show')->middleware((['auth','verified']));
 
+Route::resource('/invoice',InvoiceController::class);
 
 
 require __DIR__.'/auth.php';

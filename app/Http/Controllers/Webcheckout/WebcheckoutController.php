@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Webcheckout;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\InvoiceController;
 use App\Models\Invoice;
 use App\Request\CreateSessionRequest;
 use App\Services\WebcheckoutService;
@@ -12,6 +13,8 @@ use Illuminate\Support\Str;
 use App\Models\Product;
 use Illuminate\Support\Facades\Redirect;
 use PDO;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Database\Eloquent\Collection;
 
 class WebcheckoutController extends Controller
 {
@@ -22,38 +25,36 @@ class WebcheckoutController extends Controller
      */
     public function index()
     {
-        
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $sessionData = $this->getSessionData($request->cartContent);
+        $cartContent = Cart::content()->toArray();
+        $sessionData = $this->getSessionData($cartContent);
         $session = (new WebcheckoutService())->createSession($sessionData);
-        $products = $this->getProductCart($request->cartContent);
+        $products = $this->getProductCart($cartContent);
+
         if('OK'===$session->status->status){
-            $invoice = Invoice::create([
+            $invoice = (new InvoiceController)->store(collect([
                 'total' => $sessionData['payment']['amount']['total'],
                 'reference' => $session->requestId,
-                'payment_status'=> 'PENDING',
+                'payment_status' => 'PENDING',
+                'url_payment' => $session->processUrl,
                 'customer_id' => auth()->user()->id,
                 'user_id' => auth()->user()->id
-            ]);
+            ]));
             $invoice->products()->attach($products);
             $invoice->save();
-            return redirect()->away($session->processUrl);
+            return Redirect::away($session->processUrl);
         }
-        return redirect()->route('cart-content.index');
+
+        return Redirect::route('cart-content.index');
+    }
+
+    public function store()
+    {
     }
 
 
 
-    private function getProductCart(array $data){
+    private function getProductCart(array $data): array
+    {
         $products = array();
         foreach($data as $element){
             $products[$element['id']]=[

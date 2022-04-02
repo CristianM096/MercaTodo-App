@@ -18,6 +18,7 @@ class CreateInvoicesTable extends Migration
             $table->decimal('total',10,2);
             $table->string('reference');
             $table->string('payment_status',20);
+            $table->string('url_payment');
             $table->foreignId('customer_id');
             $table->foreign('customer_id')
                 ->references('id')

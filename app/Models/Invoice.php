@@ -16,6 +16,7 @@ class Invoice extends Model
         'reference',
         'payment_status',
         'customer_id',
+        'url_payment',
         'user_id',
     ];
 
