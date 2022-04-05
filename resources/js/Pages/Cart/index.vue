@@ -1,6 +1,6 @@
 <template>
     
-    <Head title="Carrito de Compra" />
+
     <BreezeAuthenticatedLayout>
         <template #header>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -23,11 +23,13 @@
             </div>
                     <div class="lg:ml-40 ml-10 space-x-8">
                         <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                            <a :href="route('products.show')" type="button">Seguir Comprando</a>
+                             <a :href="route('products.show')" type="button">Seguir Comprando</a>
                         </button>
-                        <button class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                            <a :href="route('webcheckout.index')" type="button">Realizar Compra</a>
-                        </button>
+                        <form  @submit.prevent="submit">
+                            <button type="submit" class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
+                                Realizar Compra
+                            </button>
+                        </form>
                     </div>
                 </div>
             
@@ -72,18 +74,12 @@
                                         </div>
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <div class="flex items-center">
-                                                <div class="ml-3">
-                                                    <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{product.qty}}
-                                                    </p>
-                                                </div>
-                                        </div>
+                                        <formCart :product="product"></formCart>
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                        <form @submit.prevent="destroy(product)">
-                                            <button :disabled="form.processing" type="submit" class="px-4 py-2 text-white bg-red-500 rounded shadow-xl">Quitar</button>
-                                        </form>
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                              <Link @click="destroy(product.rowId)" class="text-red-700">Quitar</Link>
+                                        </p>
                                     </td>
 
                                     
@@ -102,18 +98,19 @@
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination';
-
+import FormCart from '../../Components/FormCart';
 export default {
     components: {
         BreezeAuthenticatedLayout,
         Head,
         Link,
         Pagination,
+        FormCart,
     },
     data(){
         return{
             form: useForm({
-                productId:'',
+                cartContent: this.$props.cartContent,
             }),
         }
     },
@@ -121,8 +118,8 @@ export default {
 
     props:['cartContent','info'],
     methods:{
-        destroy($product) {
-            this.form.delete(route("cart.destroy",$product));
+        destroy(id) {
+            this.$inertia.delete(route("cart.destroy", id));            
         },
         submit(){
             this.form.post(route('webcheckout.store'));

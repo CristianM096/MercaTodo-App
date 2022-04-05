@@ -3,22 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
-use Illuminate\Support\Collection as SupportCollection;
-use Illuminate\Support\Facades\Redirect;
-
+use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    public function store(SupportCollection $data): Invoice
+    
+
+
+    public function store(Request $request):RedirectResponse
     {
         $invoice = Invoice::create([
-            'total' => $data['total'],
-            'reference' => $data['reference'],
-            'payment_status'=> $data['payment_status'],
-            'url_payment' => $data['payment_status'],
-            'customer_id' => $data['customer_id'],
-            'user_id' => $data['user_id'],
+            'total' => $request->total,
+            'reference' => $request->reference,
+            'payment_status' => $request->payment_status,
+            'payment_url' => $request->payment_url,
+            'customer_id' => $request->customer_id,
+            'user_id' => $request->user_id,
         ]);
-        return $invoice;
+        $Products = $request->products;
+        $invoice->save();
+        $invoice->products()->attach($Products);
+        return redirect()->route('cart-content.index');
     }
 }

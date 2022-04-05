@@ -15,11 +15,12 @@ class Invoice extends Model
         'total',
         'reference',
         'payment_status',
+        'payment_url',
         'customer_id',
-        'url_payment',
         'user_id',
     ];
 
+    
 
     public function products(): BelongsToMany
     {

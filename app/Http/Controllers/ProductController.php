@@ -34,11 +34,6 @@ class ProductController extends Controller
     }
     public function show(Request $request): Response
     {
-        /*
-        if($request->input('filterMaxPrice')){
-            dd($request->input('filterMaxPrice'));
-        }*/
-        //dd($request->input('filterName'));
         $products = Product::name($request->input('filterName'))
                     ->priceMin($request->input('filterMinPrice'))
                     ->priceMax($request->input('filterMaxPrice'))

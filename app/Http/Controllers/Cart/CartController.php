@@ -17,14 +17,15 @@ class CartController extends Controller
         return Inertia::render('Cart/index',compact('cartContent'));
     }
 
+
     public function store(Request $request)
     {
-        $product = Product::findOrfail($request->input('productId'));
-        $card = Cart::add(
-            $product->id,
-            $product->name,
-            $request->input('quantity'),
-            $product->price,
+        $product = $request->product;
+        $cart = Cart::add(
+            $product['id'],
+            $product['name'],
+            1,
+            $product['price'],
         );
 
         return Redirect::route('products.show');
@@ -32,20 +33,13 @@ class CartController extends Controller
 
     public function update(Request $request)
     {
-        
+        Cart::update($request->rowId,$request->quantity);
+        return redirect()->back();
     }
 
-    public function destroy($rowId)
+    public function destroy(String $rowId)
     {
-        //dd('hola');
-        $item = Cart::get($rowId);
-        if($item->qty==1){
-            Cart::remove($rowId);
-            return redirect()->route('cart-content.index');
-        }else{
-            $item->qty= $item->qty - 1;
-            return redirect()->route('cart-content.index');
-        }
-
+        Cart::remove($rowId);
+        return Redirect::route('cart-content.index');
     }
 }

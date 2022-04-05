@@ -11,10 +11,11 @@ use Illuminate\Http\Request;
 use League\CommonMark\Reference\Reference;
 use Illuminate\Support\Str;
 use App\Models\Product;
-use Illuminate\Support\Facades\Redirect;
-use PDO;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Request as FacadesRequest;
+use PDO;
+use Illuminate\Support\Facades\Route;
 
 class WebcheckoutController extends Controller
 {
@@ -25,36 +26,42 @@ class WebcheckoutController extends Controller
      */
     public function index()
     {
-        $cartContent = Cart::content()->toArray();
-        $sessionData = $this->getSessionData($cartContent);
-        $session = (new WebcheckoutService())->createSession($sessionData);
-        $products = $this->getProductCart($cartContent);
+        
+    }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $sessionData = $this->getSessionData($request->cartContent);
+        $session = (new WebcheckoutService())->createSession($sessionData);
+        
+        $products = $this->getProductCart($request->cartContent);
         if('OK'===$session->status->status){
-            $invoice = (new InvoiceController)->store(collect([
+
+            $invoice = (new Request());
+            $invoice->setMethod('post');
+            $invoice->request->add([
                 'total' => $sessionData['payment']['amount']['total'],
                 'reference' => $session->requestId,
-                'payment_status' => 'PENDING',
-                'url_payment' => $session->processUrl,
+                'payment_status'=> 'PENDING',
+                'payment_url' => $session->processUrl,
                 'customer_id' => auth()->user()->id,
-                'user_id' => auth()->user()->id
-            ]));
-            $invoice->products()->attach($products);
-            $invoice->save();
-            return Redirect::away($session->processUrl);
+                'user_id' => auth()->user()->id,
+                'products' => $products,
+            ]);
+            (new InvoiceController)->store($invoice);
         }
-
-        return Redirect::route('cart-content.index');
-    }
-
-    public function store()
-    {
+        return redirect()->route('cart-content.index');
     }
 
 
 
-    private function getProductCart(array $data): array
-    {
+    private function getProductCart(array $data){
         $products = array();
         foreach($data as $element){
             $products[$element['id']]=[
