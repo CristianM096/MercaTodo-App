@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\GetInformationJob;
 use Illuminate\Console\Command;
 
 class GetInformationCommand extends Command
@@ -37,6 +38,7 @@ class GetInformationCommand extends Command
      */
     public function handle()
     {
-        return 0;
+        //dispatch_sync((new GetInformationJob()));
+        GetInformationJob::dispatch();
     }
 }

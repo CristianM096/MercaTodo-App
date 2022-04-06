@@ -8,27 +8,27 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('productsClient.index')">
                                     <BreezeApplicationLogo class="block h-9 w-auto" />
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink :href="route('dashboard')" :active="route().current('Dashboard')">
+                                <BreezeNavLink v-if="$page.props.auth.user.roles[0].name === 'Client'||$page.props.auth.user.roles[0].name === 'Admin'" :href="route('productsClient.index')" :active="route().current('productsClient.index')">
                                     Dashboard
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
+                                <BreezeNavLink v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('users.index')" :active="route().current('users.index')">
                                     Listar Usuarios
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('products.index')" :active="route().current('products.index')">
+                                <BreezeNavLink v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('products.index')" :active="route().current('products.index')">
                                     Listar Productos
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('products.create')" :active="route().current('products.create')">
+                                <BreezeNavLink v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('products.create')" :active="route().current('products.create')">
                                     Crear Productos
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('products.show')" :active="route().current('products.show')">
-                                    Home
+                                <BreezeNavLink v-if="$page.props.auth.user.roles[0].name === 'Admin'||$page.props.auth.user.roles[0].name === 'Client'" :href="route('invoice.index')" :active="route().current('invoice.index')">
+                                    Historial de Compras
                                 </BreezeNavLink>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                                         <BreezeDropdownLink :href="route('products.create')" as="button">
                                             Create Products
                                         </BreezeDropdownLink>
-                                        <BreezeDropdownLink :href="route('dashboard')"  as="button">
+                                        <BreezeDropdownLink :href="route('productsClient.index')"  as="button">
                                             Dashboard
                                         </BreezeDropdownLink>
                                     </template>
@@ -85,7 +85,7 @@
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <BreezeResponsiveNavLink :href="route('productsClient.index')" :active="route().current('productsClient.index')">
                             Dashboard
                         </BreezeResponsiveNavLink>
                     </div>
@@ -104,7 +104,7 @@
                             <BreezeResponsiveNavLink :href="route('users.index')" method="post" as="button">
                                 List User
                             </BreezeResponsiveNavLink>
-                            <BreezeResponsiveNavLink :href="route('dashboard')" method="post" as="button">
+                            <BreezeResponsiveNavLink :href="route('productsClient.index')" method="post" as="button">
                                 Dashboard
                             </BreezeResponsiveNavLink>
                         </div>

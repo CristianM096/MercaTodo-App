@@ -28,7 +28,7 @@ class CartController extends Controller
             $product['price'],
         );
 
-        return Redirect::route('products.show');
+        return Redirect::route('productsClient.index');
     }
 
     public function update(Request $request)
@@ -37,9 +37,15 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function destroy(String $rowId)
+    public function remove(String $rowId)
     {
+        //dd('hola');
         Cart::remove($rowId);
+        return Redirect::route('cart-content.index');
+    }
+    public function destroy()
+    {
+        Cart::destroy();
         return Redirect::route('cart-content.index');
     }
 }
