@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers\Webcheckout;
 
+use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\Invoice\InvoiceController;
 use App\Models\Invoice;
 use App\Request\CreateSessionRequest;
 use App\Services\WebcheckoutService;
 use Illuminate\Http\Request;
 use League\CommonMark\Reference\Reference;
 use Illuminate\Support\Str;
-use App\Models\Product;
+use FFI\Exception;
 use Gloudemans\Shoppingcart\Facades\Cart;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request as FacadesRequest;
-use PDO;
-use Illuminate\Support\Facades\Route;
 
 class WebcheckoutController extends Controller
 {
@@ -25,8 +22,35 @@ class WebcheckoutController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        
+    {   
+        $request = Cart::Content()->toArray();
+        $sessionData = $this->getSessionData($request);
+        if(!$request or $sessionData['payment']['amount']['total']<10000){
+            return redirect()->route('cart-content.index');
+        }
+        try{
+            $session = (new WebcheckoutService())->createSession($sessionData);
+            $products = $this->getProductCart($request);
+            if('OK'===$session->status->status){
+                (new CartController)->destroy();
+                $invoice = (new Request());
+                $invoice->setMethod('post');
+                $invoice->request->add([
+                    'total' => $sessionData['payment']['amount']['total'],
+                    'reference' => $session->requestId,
+                    'payment_status'=> 'PENDING',
+                    'payment_url' => $session->processUrl,
+                    'customer_id' => auth()->user()->id,
+                    'user_id' => auth()->user()->id,
+                    'products' => $products,
+                ]);
+                (new InvoiceController)->store($invoice);
+                return redirect()->to($session->processUrl);
+            }
+            redirect()->route('cart-content.index');
+        }catch(Exception $e){
+            return redirect()->route('cart-content.index');
+        }
     }
 
     /**
@@ -37,26 +61,7 @@ class WebcheckoutController extends Controller
      */
     public function store(Request $request)
     {
-        $sessionData = $this->getSessionData($request->cartContent);
-        $session = (new WebcheckoutService())->createSession($sessionData);
         
-        $products = $this->getProductCart($request->cartContent);
-        if('OK'===$session->status->status){
-
-            $invoice = (new Request());
-            $invoice->setMethod('post');
-            $invoice->request->add([
-                'total' => $sessionData['payment']['amount']['total'],
-                'reference' => $session->requestId,
-                'payment_status'=> 'PENDING',
-                'payment_url' => $session->processUrl,
-                'customer_id' => auth()->user()->id,
-                'user_id' => auth()->user()->id,
-                'products' => $products,
-            ]);
-            (new InvoiceController)->store($invoice);
-        }
-        return redirect()->route('cart-content.index');
     }
 
 
@@ -92,8 +97,8 @@ class WebcheckoutController extends Controller
                 'description' => $description,
                 'amount' => $amount
             ],
-            'returnUrl' => 'http://127.0.0.1:8000/dashboard',
-            'expiration' => date('c',strtotime('+2 days')),
+            'returnUrl' => 'http://127.0.0.1:8000/invoice',
+            'expiration' => date('c',strtotime('+10 minutes')),
 
         ];
     }

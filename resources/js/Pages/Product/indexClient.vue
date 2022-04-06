@@ -4,8 +4,6 @@
     <BreezeAuthenticatedLayout>
         <template #header>
             <div>
-                
-
                 <form @submit.prevent="submit" >
                     <div class="flex justify-between">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight" >
@@ -47,7 +45,7 @@
                                 Search
                             </button>
                             <a class="px-4 py-2 text-white bg-red-500 rounded shadow-xl" 
-                                :href="route('products.show')" type="button" >
+                                :href="route('productsClient.index')" type="button" >
                                 Clear
                             </a>
                         </div>
@@ -170,7 +168,7 @@ export default {
     props:['products'],
     methods:{
         submit() {
-            this.form.get(this.route('products.show'),
+            this.form.get(this.route('productsClient.index'),
                 this.form
             )
         },
