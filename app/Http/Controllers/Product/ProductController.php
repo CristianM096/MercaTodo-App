@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Product;
 
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
@@ -31,19 +32,6 @@ class ProductController extends Controller
         } else {
             return Inertia::render('Product/indexAdmin', compact('products'));
         }
-    }
-    public function show(Request $request): Response
-    {
-        /*
-        if($request->input('filterMaxPrice')){
-            dd($request->input('filterMaxPrice'));
-        }*/
-        //dd($request->input('filterName'));
-        $products = Product::name($request->input('filterName'))
-                    ->priceMin($request->input('filterMinPrice'))
-                    ->priceMax($request->input('filterMaxPrice'))
-                    ->paginate(12);
-        return Inertia::render('Product/indexClient', compact('products'));
     }
 
     public function create(): Response

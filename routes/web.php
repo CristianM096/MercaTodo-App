@@ -1,12 +1,16 @@
 <?php
 
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Invoice\InvoiceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Webcheckout\WebcheckoutController;
+use App\Http\Controllers\Product\ProductClientController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,16 +43,21 @@ Route::group(['middleware' => ['role:Admin']], function () {
 
 });
 
+
 Route::post('/cart', [CartController::class, 'store'])
-      ->name('cart.store')->middleware((['auth','verified']));
+      ->name('cart.store')->middleware((['auth','verified','role:Client|Admin']));
 Route::get('/cart-content', [CartController::class, 'index'])
-      ->name('cart-content.index')->middleware((['auth','verified','cors']));
-Route::delete('/cart/{cart}', [CartController::class, 'destroy'])->name('cart.destroy');
+      ->name('cart-content.index')->middleware((['auth','verified','role:Client|Admin']));
+Route::delete('/cart', [CartController::class, 'destroy'])->name('cart.destroy')->middleware((['auth','verified','role:Client|Admin']));
+Route::put('/cart/update',[CartController::class,'update'])->name('cart.update')->middleware((['auth','verified','role:Client|Admin']));
+Route::get('/cart/delete{rowId}',[CartController::class,'remove'])->name('cart.delete')->middleware((['auth','verified','role:Client|Admin']));
 
-Route::resource('/webcheckout',WebcheckoutController::class)->middleware(['cors']);
+Route::resource('/webcheckout',WebcheckoutController::class)->middleware((['auth','verified','role:Client|Admin']));
 
-Route::get('/products/show', [ProductController::class, 'show'])->name('products.show')->middleware((['auth','verified']));
+Route::get('/dashboard', [ProductClientController::class, 'index'])->name('productsClient.index')->middleware((['auth','verified','role:Client|Admin']));
 
-
+Route::post('/invoice/store',[InvoiceController::class,'store'])->name('invoice.store')->middleware((['auth','verified','role:Client|Admin']));
+Route::get('/invoice',[InvoiceController::class,'index'])->name('invoice.index')->middleware((['auth','verified','role:Client|Admin']));
+Route::get('/invoice/show{invoice}',[InvoiceController::class,'show'])->name('invoice.show')->middleware((['auth','verified','role:Client|Admin']));
 
 require __DIR__.'/auth.php';

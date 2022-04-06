@@ -14,6 +14,7 @@ class CreateInvoiceProductTable extends Migration
     public function up()
     {
         Schema::create('invoice_product', function (Blueprint $table) {
+            $table->id();
             $table->unsignedInteger('quantity');
             $table->decimal('price',10,2);
             $table->decimal('subtotal',10,2);

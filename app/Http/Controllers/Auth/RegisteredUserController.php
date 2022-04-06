@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
+        $user->assignRole('Client');
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);

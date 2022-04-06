@@ -53,7 +53,7 @@ class WebcheckoutTest extends TestCase
         $this->assertEquals('PENDING',$request->status->status);
     }
 
-    public function testItGetInformationFronServiceCorrectly()
+    public function testItGetInformationFromServiceCorrectly()
     {
         $session_id = 51723;
         $responseGetSession = $request = (new WebcheckoutService())->getInformation($session_id);

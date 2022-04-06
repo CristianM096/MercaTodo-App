@@ -20,27 +20,32 @@ class CartController extends Controller
 
     public function store(Request $request)
     {
-        $product = Product::findOrfail($request->input('productId'));
-        $card = Cart::add(
-            $product->id,
-            $product->name,
-            $request->input('quantity'),
-            $product->price,
+        $product = $request->product;
+        $cart = Cart::add(
+            $product['id'],
+            $product['name'],
+            1,
+            $product['price'],
         );
 
-        return Redirect::route('products.show');
+        return Redirect::route('productsClient.index');
     }
 
-    public function destroy($rowId)
+    public function update(Request $request)
     {
-        $item = Cart::get($rowId);
-        if($item->qty==1){
-            Cart::remove($rowId);
-            return redirect()->route('cart-content.index');
-        }else{
-            $item->qty= $item->qty - 1;
-            return redirect()->route('cart-content.index');
-        }
+        Cart::update($request->rowId,$request->quantity);
+        return redirect()->back();
+    }
 
+    public function remove(String $rowId)
+    {
+        //dd('hola');
+        Cart::remove($rowId);
+        return Redirect::route('cart-content.index');
+    }
+    public function destroy()
+    {
+        Cart::destroy();
+        return Redirect::route('cart-content.index');
     }
 }
