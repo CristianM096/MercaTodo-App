@@ -15,11 +15,12 @@ class UpdateTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    public function testAUserNotAutenticatedCanNotUpdateProduct(){
+    public function testAUserNotAutenticatedCanNotUpdateProduct()
+    {
         //$this->withoutExceptionHandling();
         $product = Product::factory()->create();
         $prod = $this->productData();
-        $response = $this->put(route('users.update',$product),$prod,[
+        $response = $this->put(route('users.update', $product), $prod, [
             'name' ,
             'price' ,
             'photo' ,
@@ -33,13 +34,14 @@ class UpdateTest extends TestCase
         $response->assertStatus(302);
     }
 
-    public function testAUserClientAutenticatedCanNotUpdateProduct(){
+    public function testAUserClientAutenticatedCanNotUpdateProduct()
+    {
         Role::create(['name' => 'Client']);
         $user = User::factory()->create()->assignRole('Client');
         $this->actingAs($user);
         $product = Product::factory()->create();
         $prod = $this->productData();
-        $response = $this->put(route('users.update',$product),$prod,[
+        $response = $this->put(route('users.update', $product), $prod, [
             'name' ,
             'price' ,
             'photo' ,
@@ -53,13 +55,14 @@ class UpdateTest extends TestCase
         $response->assertSee('User does not have the right roles.');
     }
 
-    public function testAUserAdminAutenticatedCanUpdateProduct(){
+    public function testAUserAdminAutenticatedCanUpdateProduct()
+    {
         Role::create(['name' => 'Admin']);
         $user = User::factory()->create()->assignRole('Admin');
         $this->actingAs($user);
         $product = Product::factory()->create();
         $prod = $this->productData();
-        $response = $this->put(route('products.update',$product),$prod,[
+        $response = $this->put(route('products.update', $product), $prod, [
             'name' ,
             'price' ,
             'photo' ,
@@ -70,11 +73,11 @@ class UpdateTest extends TestCase
             'size' ,
             'active'
         ]);
-        $ddbb_Product = Product::where('id',$product->id)->first();
+        $ddbb_Product = Product::where('id', $product->id)->first();
         dd($ddbb_Product);
-        $this->assertEquals($ddbb_Product->description,$prod['description']);
-        $this->assertEquals($ddbb_Product->name,$prod['name']);
-        $this->assertEquals($ddbb_Product->price,$prod['price']);
+        $this->assertEquals($ddbb_Product->description, $prod['description']);
+        $this->assertEquals($ddbb_Product->name, $prod['name']);
+        $this->assertEquals($ddbb_Product->price, $prod['price']);
         $response->assertRedirect(route('products.index'));
         $response->assertStatus(302);
     }

@@ -24,6 +24,7 @@ class AuthenticatedSessionController extends Controller
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
+            'background' => url('/storage/img/'.'Night-Sky.jpg'),
         ]);
     }
 
@@ -41,7 +42,7 @@ class AuthenticatedSessionController extends Controller
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
-
+    
     /**
      * Destroy an authenticated session.
      *

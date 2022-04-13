@@ -14,7 +14,8 @@ use Tests\TestCase;
 class ShowTest extends TestCase
 {
     use RefreshDatabase;
-    public function testAUserClientAutenticatedCanListProducts(){
+    public function testAUserClientAutenticatedCanListProducts()
+    {
         $this->withoutExceptionHandling();
         Product::factory(15)->create();
         Role::create(['name' => 'Client']);
@@ -22,15 +23,17 @@ class ShowTest extends TestCase
         $this->actingAs($user);
         $response = $this->get(route('products.show'));
 
-        $response->assertInertia(fn (Assert $page)=> $page
+        $response->assertInertia(
+            fn (Assert $page) => $page
             ->component('Product/indexClient')
-            ->has('products', fn (Assert $page)=> $page
-                ->where('total',15)
-                ->where('last_page',2)
-                ->has('data',12)
+            ->has(
+                'products',
+                fn (Assert $page) => $page
+                ->where('total', 15)
+                ->where('last_page', 2)
+                ->has('data', 12)
                 ->etc()
             )
         );
     }
-
 }

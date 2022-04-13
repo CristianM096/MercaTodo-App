@@ -15,7 +15,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Http\Requests\Product\StoreProductRequest;
-use App\Http\Requests\Product\UpdateProductRequest; 
+use App\Http\Requests\Product\UpdateProductRequest;
 
 use function PHPSTORM_META\type;
 
@@ -24,10 +24,10 @@ class ProductController extends Controller
     public function index(Request $request): Response
     {
         $products = Product::paginate(12);
-        
-        if (Arr::has($request->session()->all(), 'message')) {            
+
+        if (Arr::has($request->session()->all(), 'message')) {
             $info = $request->session()->all()['message'];
-            
+
             return Inertia::render('Product/indexAdmin', compact('products', 'info'));
         } else {
             return Inertia::render('Product/indexAdmin', compact('products'));
@@ -43,12 +43,11 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = ProductCategory::all();
-        return Inertia::render('Product/editAdmin', compact('product','categories'));
+        return Inertia::render('Product/editAdmin', compact('product', 'categories'));
     }
 
     public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
-        
         $product->update([
             'name' => $request->name,
             'price' => $request->price,
@@ -61,9 +60,8 @@ class ProductController extends Controller
             'active' => $request->active,
             'category_id' => $request->category,
         ]);
-        
+
         if ($request->hasFile('photo')) {
-            
             $photo = $request->photo;
             $namePhoto = (string)Str::uuid().'.'.$photo->getClientOriginalExtension();
             $photo->storeAs('public/productImages', $namePhoto);
@@ -77,10 +75,8 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request): RedirectResponse
     {
-        
         $photo = $request->photo;
         $namePhoto = (string)Str::uuid().'.'.$photo->getClientOriginalExtension();
-
         $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
@@ -94,7 +90,7 @@ class ProductController extends Controller
             'size' => $request->size,
             'active' => $request->active,
             'category_id' => $request->category,
-            'discount' => $request->discount 
+            'discount' => $request->discount
         ]);
         event(new Registered($product));
         $photo->storeAs('public/productImages', $namePhoto);

@@ -18,5 +18,4 @@ class ProductCategory extends Model
     protected $fillable = [
         'description',
     ];
-
 }

@@ -21,13 +21,13 @@ class Invoice extends Model
         'user_id',
     ];
 
-    
+
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->withPivot('quantity','subtotal','price');
+        return $this->belongsToMany(Product::class)->withPivot('quantity', 'subtotal', 'price');
     }
-    public function invoice_products():BelongsTo
+    public function invoice_products(): BelongsTo
     {
         return $this->belongsTo(InvoiceProduct::class);
     }
