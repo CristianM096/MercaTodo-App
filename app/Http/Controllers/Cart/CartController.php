@@ -24,7 +24,7 @@ class CartController extends Controller
         $cart = Cart::add(
             $product['id'],
             $product['name'],
-            1,
+            $request->qty,
             $product['price'],
         );
 

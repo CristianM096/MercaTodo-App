@@ -16,8 +16,8 @@ class ProductClientController extends Controller
                     ->priceMin($request->input('filterMinPrice'))
                     ->priceMax($request->input('filterMaxPrice'))
                     ->where('active', '=', true);
-        $products = $products->paginate(12);     
-        $featured = $products->orderByRaw('RAND()')->take(1)->get();
+        $featured = $products->orderByRaw('RAND()')->take(1)->first();
+        $products = $products->paginate(12);
         return Inertia::render('Product/indexClient', compact('products','featured'));
     }
 }

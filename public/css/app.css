@@ -1245,6 +1245,22 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(185 28 28 / var(--tw-bg-opacity));
 }
+.bg-\[\#041C32\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(4 28 50 / var(--tw-bg-opacity));
+}
+.bg-\[\#04293A\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(4 41 58 / var(--tw-bg-opacity));
+}
+.bg-\[\#064663\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(6 70 99 / var(--tw-bg-opacity));
+}
+.bg-\[\#ECB365\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(236 179 101 / var(--tw-bg-opacity));
+}
 .bg-opacity-20 {
   --tw-bg-opacity: 0.2;
 }
@@ -1558,6 +1574,10 @@ select {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
+.text-\[\#ECB365\] {
+  --tw-text-opacity: 1;
+  color: rgb(236 179 101 / var(--tw-text-opacity));
+}
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
@@ -1740,6 +1760,14 @@ select {
   --tw-text-opacity: 1;
   color: rgb(30 58 138 / var(--tw-text-opacity));
 }
+.hover\:text-white:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.hover\:text-yellow-400:hover {
+  --tw-text-opacity: 1;
+  color: rgb(250 204 21 / var(--tw-text-opacity));
+}
 .focus\:z-10:focus {
   z-index: 10;
 }
@@ -1818,6 +1846,10 @@ select {
 .focus\:text-gray-500:focus {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+.focus\:text-white:focus {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 .focus\:outline-none:focus {
   outline: 2px solid transparent;

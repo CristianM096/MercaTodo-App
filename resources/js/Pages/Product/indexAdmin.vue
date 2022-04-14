@@ -4,11 +4,11 @@
     <BreezeAuthenticatedLayout>
         <template #header>
             <div class="flex justify-between">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <h2 class="font-semibold text-xl leading-tight">
                     Lista de Productos
                 </h2>
                 <a :href="route('products.create')" type="button"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-6 border border-blue-700 rounded mt-0 mb-0 ">
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-6 border border-blue-700 rounded ">
                     Crear 
                 </a>
                 
