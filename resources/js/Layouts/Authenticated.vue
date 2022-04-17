@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="min-h-screen bg-gray-100">
-            <nav class="bg-[#041C32] border-transparent border-gray-100">
+            <nav class="bg-[#1d2541] border-transparent border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -16,19 +16,19 @@
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" >
-                                <BreezeNavLink  class="text-[#ECB365] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Client'||$page.props.auth.user.roles[0].name === 'Admin'" :href="route('productsClient.index')" :active="route().current('productsClient.index')">
+                                <BreezeNavLink  class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Client'||$page.props.auth.user.roles[0].name === 'Admin'" :href="route('productsClient.index')" :active="route().current('productsClient.index')">
                                     Dashboard
                                 </BreezeNavLink>
-                                <BreezeNavLink class="text-[#ECB365] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('users.index')" :active="route().current('users.index')">
+                                <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('users.index')" :active="route().current('users.index')">
                                     Listar Usuarios
                                 </BreezeNavLink>
-                                <BreezeNavLink class="text-[#ECB365] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('products.index')" :active="route().current('products.index')">
+                                <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('products.index')" :active="route().current('products.index')">
                                     Listar Productos
                                 </BreezeNavLink>
-                                <BreezeNavLink class="text-[#ECB365] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('products.create')" :active="route().current('products.create')">
+                                <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('products.create')" :active="route().current('products.create')">
                                     Crear Productos
                                 </BreezeNavLink>
-                                <BreezeNavLink class="text-[#ECB365] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'||$page.props.auth.user.roles[0].name === 'Client'" :href="route('invoice.index')" :active="route().current('invoice.index')">
+                                <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'||$page.props.auth.user.roles[0].name === 'Client'" :href="route('invoice.index')" :active="route().current('invoice.index')">
                                     Historial de Compras
                                 </BreezeNavLink>
                             </div>
@@ -114,7 +114,7 @@
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-[#064663] border-transparent shadow" v-if="$slots.header">
+            <header class="bg-black border-transparent shadow" v-if="$slots.header">
                 <div class="text-white max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>

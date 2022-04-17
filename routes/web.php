@@ -32,7 +32,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified','role:Client|Admin'])->name('dashboard');
+})->middleware(['auth', 'verified','role:Client|Admin','checkUser'])->name('dashboard');
 
 Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('users', UserController::class)->middleware(['auth', 'verified']);

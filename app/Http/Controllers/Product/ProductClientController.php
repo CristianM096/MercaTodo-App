@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Inertia\Response;
 use Inertia\Inertia;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ProductClientController extends Controller
 {
@@ -18,6 +19,7 @@ class ProductClientController extends Controller
                     ->where('active', '=', true);
         $featured = $products->orderByRaw('RAND()')->take(1)->first();
         $products = $products->paginate(12);
-        return Inertia::render('Product/indexClient', compact('products','featured'));
+        $qtyCart = Cart::count();
+        return Inertia::render('Product/indexClient', compact('products','featured','qtyCart'));
     }
 }
