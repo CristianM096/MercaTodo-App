@@ -19,19 +19,19 @@ class CreateSessionRequest extends GetInformationRequest implements WebcheckoutR
         $this->returnUrl = $data['returnUrl'];
     }
 
-    public static function url(?int $session_id):string
+    public static function url(?int $session_id): string
     {
         return config('webcheckout.url').'/api/session';
     }
 
-    public function toArray()
+    public function toArray(): array
     {
-        return array_merge(parent::auth(),[
+        return array_merge(parent::auth(), [
             'payment' => $this->payment,
             'expiration' =>$this->expiration,
             'returnUrl' => $this->returnUrl,
             'ipAddress' => app(Request::class)->getClientIp(),
-            'userAgent' => substr(app(Request::class)->header('User-Agent'),0,255),
+            'userAgent' => substr(app(Request::class)->header('User-Agent'), 0, 255),
         ]);
     }
 }

@@ -16,17 +16,17 @@ class InvoiceSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::whereHas('roles', function ($query){
-            $query->where('name','Admin');
+        $user = User::whereHas('roles', function ($query) {
+            $query->where('name', 'Admin');
         })->first();
 
         Invoice::factory()
             ->count(20)
             ->make()
-            ->each(function (Invoice $invoice) use ($user){
-                $client = User::whereHas('roles', function ($query){
-                        $query->where('name','Client');
-                    })
+            ->each(function (Invoice $invoice) use ($user) {
+                $client = User::whereHas('roles', function ($query) {
+                    $query->where('name', 'Client');
+                })
                     ->inRandomOrder()
                     ->first();
                 $products =Product::inRandomOrder()
@@ -34,8 +34,8 @@ class InvoiceSeeder extends Seeder
                     ->get();
                 $data = [];
 
-                foreach ($products as $product){
-                    $quantity = random_int(2,6);
+                foreach ($products as $product) {
+                    $quantity = random_int(2, 6);
                     $data[$product->id] = [
                         'quantity' => $quantity,
                         'price' => (float) $product->price,
@@ -51,7 +51,6 @@ class InvoiceSeeder extends Seeder
                 $invoice->user()->associate($user);
                 $invoice->save();
                 $invoice->products()->attach($data);
-
             });
     }
 }

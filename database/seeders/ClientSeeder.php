@@ -19,7 +19,7 @@ class ClientSeeder extends Seeder
     {
         User::factory(20)
             ->create()
-            ->each(function (User $user){
+            ->each(function (User $user) {
                 $user->assignRole('Client');
             });
     }

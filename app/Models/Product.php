@@ -21,7 +21,7 @@ class Product extends Model
 
     public function invoice(): BelongsToMany
     {
-        return $this->belongsToMany(Invoice::class)->withPivot('quantity','subtotal','price');
+        return $this->belongsToMany(Invoice::class)->withPivot('quantity', 'subtotal', 'price');
     }
 
     protected $with = ['category'];
@@ -39,45 +39,47 @@ class Product extends Model
         'active',
         'category_id',
     ];
-    
-    public function getPhotoAttribute(){
+
+    public function getPhotoAttribute()
+    {
         $name = $this->getImageName();
         return url('/storage/productImages/'.$name);
     }
-    public function getImageName(){
+    public function getImageName()
+    {
         $path = explode("\\", $this->attributes['photo']);
-        if(sizeof($path) === 2){
+        if (sizeof($path) === 2) {
             $name = $path[1];
-        }else{
+        } else {
             $name = $path[0];
         }
         return $name;
     }
-    public static function scopeName(Builder $query, ? string $name):Builder
+    public static function scopeName(Builder $query, ?string $name): Builder
     {
-        if(null !== $name){
-            $query->where('name','like', "%$name%");
+        if (null !== $name) {
+            $query->where('name', 'like', "%$name%");
             return $query;
         }
         return $query;
     }
-    public static function scopePriceMax(Builder $query, ? float $priceMax):Builder
+    public static function scopePriceMax(Builder $query, ?float $priceMax): Builder
     {
-        if(null === $priceMax || 0>=$priceMax){
+        if (null === $priceMax || 0>=$priceMax) {
             return $query;
-        }else{
-            $query->where('price','<', $priceMax);
+        } else {
+            $query->where('price', '<', $priceMax);
             return $query;
         }
     }
 
-    public static function scopePriceMin(Builder $query, ? float $priceMin):Builder
+    public static function scopePriceMin(Builder $query, ?float $priceMin): Builder
     {
-        if(null === $priceMin || 0 > $priceMin){
+        if (null === $priceMin || 0 > $priceMin) {
             return $query;
-        }else{
+        } else {
             //dd($priceMax);
-            $query->where('price',">", $priceMin);
+            $query->where('price', ">", $priceMin);
             return $query;
         }
     }

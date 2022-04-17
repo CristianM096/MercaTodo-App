@@ -16,8 +16,8 @@ class CreateInvoiceProductTable extends Migration
         Schema::create('invoice_product', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('quantity');
-            $table->decimal('price',10,2);
-            $table->decimal('subtotal',10,2);
+            $table->decimal('price', 10, 2);
+            $table->decimal('subtotal', 10, 2);
             $table->foreignId('invoice_id');
             $table->foreign('invoice_id')
                 ->references('id')

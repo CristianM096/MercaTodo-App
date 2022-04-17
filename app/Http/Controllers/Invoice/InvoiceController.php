@@ -12,19 +12,19 @@ use App\Jobs\GetInformationJob;
 
 class InvoiceController extends Controller
 {
-    public function index():Response
+    public function index(): Response
     {
-        $invoices = Invoice::where('customer_id','=',auth()->user()->id)->orderBy('created_at','desc')->paginate(10);
-        return Inertia::render('Invoice/index',compact('invoices'));
+        $invoices = Invoice::where('customer_id', '=', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(10);
+        return Inertia::render('Invoice/index', compact('invoices'));
     }
 
-    public function show(Invoice $invoice):Response
+    public function show(Invoice $invoice): Response
     {
         $products = $invoice->products()->get(['name','description','discount']);
-        return Inertia::render('Invoice/show',compact('invoice', 'products'));
+        return Inertia::render('Invoice/show', compact('invoice', 'products'));
     }
 
-    public function store(Request $request):RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $invoice = Invoice::create([
             'total' => $request->total,
@@ -37,6 +37,6 @@ class InvoiceController extends Controller
         $Products = $request->products;
         $invoice->save();
         $invoice->products()->attach($Products);
-        return redirect()->route('invoice.show',$invoice);
+        return redirect()->route('invoice.show', $invoice);
     }
 }

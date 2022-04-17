@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use Inertia\Response;
 use Inertia\Inertia;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class ProductClientController extends Controller
 {
@@ -15,8 +16,10 @@ class ProductClientController extends Controller
         $products = Product::name($request->input('filterName'))
                     ->priceMin($request->input('filterMinPrice'))
                     ->priceMax($request->input('filterMaxPrice'))
-                    ->where('active','=',true)
-                    ->paginate(12);
-        return Inertia::render('Product/indexClient', compact('products'));
+                    ->where('active', '=', true);
+        $featured = $products->orderByRaw('RAND()')->take(1)->first();
+        $products = $products->paginate(12);
+        $qtyCart = Cart::count();
+        return Inertia::render('Product/indexClient', compact('products','featured','qtyCart'));
     }
 }

@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         //$schedule->command('consult:webcheckout')->everyMinute();
-        $schedule->job(new GetInformationJob)->everyFiveMinutes();
+        $schedule->job(new GetInformationJob())->everyFiveMinutes();
     }
 
     /**

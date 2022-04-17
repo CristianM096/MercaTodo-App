@@ -10,7 +10,6 @@ use Tests\TestCase;
 use Inertia\Testing\Assert;
 use Spatie\Permission\Models\Role;
 
-
 class IndexTest extends TestCase
 {
     use RefreshDatabase;
@@ -32,7 +31,5 @@ class IndexTest extends TestCase
                 ->etc()
             )
         );*/
-        
     }
-    
 }
