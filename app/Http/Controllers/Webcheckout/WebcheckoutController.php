@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Webcheckout;
 
+use App\Actions\CreateSessionAction;
 use App\Constants\PaymentStatus;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Controller;
@@ -23,37 +24,14 @@ class WebcheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(): RedirectResponse
+
+    public function store(CreateSessionAction $createSessionAction)
     {
-        $request = Cart::Content()->toArray();
-        $sessionData = $this->getSessionData($request);
-        if (!$request or $sessionData['payment']['amount']['total']<10000) {
-            return redirect()->route('cart-content.index');
-        }
-        try {
-            $session = (new WebcheckoutService())->createSession($sessionData);
-            $products = $this->getProductCart($request);
-            if ('OK'===$session->status->status) {
-                (new CartController())->destroy();
-                $invoice = (new Request());
-                $invoice->setMethod('post');
-                $invoice->request->add([
-                    'total' => $sessionData['payment']['amount']['total'],
-                    'reference' => $session->requestId,
-                    'payment_status'=> PaymentStatus::PENDING,
-                    'payment_url' => $session->processUrl,
-                    'customer_id' => auth()->user()->id,
-                    'user_id' => auth()->user()->id,
-                    'products' => $products,
-                ]);
-                (new InvoiceController())->store($invoice);
-                return redirect()->to($session->processUrl);
-            }
-            redirect()->route('cart-content.index');
-        } catch (Exception $e) {
-            return redirect()->route('cart-content.index');
-        }
+        $processUrl = $createSessionAction->handle();
+        return response()->json(['processUrl'=>$processUrl]);
     }
+
+    
 
     private function getProductCart(array $data): array
     {

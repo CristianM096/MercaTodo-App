@@ -24,7 +24,7 @@ class InvoiceController extends Controller
         return Inertia::render('Invoice/show', compact('invoice', 'products'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): ?Invoice
     {
         $invoice = Invoice::create([
             'total' => $request->total,
@@ -37,6 +37,6 @@ class InvoiceController extends Controller
         $Products = $request->products;
         $invoice->save();
         $invoice->products()->attach($Products);
-        return redirect()->route('invoice.show', $invoice);
+        return $invoice ?? null;
     }
 }

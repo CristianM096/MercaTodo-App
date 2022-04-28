@@ -36,13 +36,9 @@ Route::get('/dashboard', function () {
 
 Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('users', UserController::class)->middleware(['auth', 'verified']);
-    Route::resource(
-        'products',
-        ProductController::class,
-        [
-        'except' => ['show']]
-    )->middleware(['auth','verified']);
+    Route::resource('products',ProductController::class)->middleware(['auth','verified']);
 });
+
 
 
 Route::post('/cart', [CartController::class, 'store'])
@@ -56,6 +52,7 @@ Route::get('/cart/delete{rowId}', [CartController::class,'remove'])->name('cart.
 Route::resource('/webcheckout', WebcheckoutController::class)->middleware((['auth','verified','role:Client|Admin']));
 
 Route::get('/dashboard', [ProductClientController::class, 'index'])->name('productsClient.index')->middleware((['auth','verified','role:Client|Admin']));
+Route::get('/dashboard/{product}',[ProductClientController::class,'show'])->name('productsClient.show')->middleware(['auth','verified','role:Admin|Client']);
 
 Route::post('/invoice/store', [InvoiceController::class,'store'])->name('invoice.store')->middleware((['auth','verified','role:Client|Admin']));
 Route::get('/invoice', [InvoiceController::class,'index'])->name('invoice.index')->middleware((['auth','verified','role:Client|Admin']));
