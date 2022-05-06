@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Imports\ProductsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use function PHPSTORM_META\type;
 
@@ -97,6 +99,14 @@ class ProductController extends Controller
 
         $message = "Se creó el Producto correctamente";
 
+        return Redirect::route('products.index');
+    }
+
+    public function import(Request $request): RedirectResponse
+    {
+        //dd($request);
+        $file = $request->file;
+        Excel::import(new ProductsImport, $file);
         return Redirect::route('products.index');
     }
 }

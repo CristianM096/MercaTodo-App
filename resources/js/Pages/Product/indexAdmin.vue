@@ -9,14 +9,36 @@
                 </h2>
                 <a :href="route('products.create')" type="button"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-6 border border-blue-700 rounded ">
-                    Crear 
+                    Crear
                 </a>
-                
+                <!-- <form @submit.prevent="importFile" >
+                    <input type="file" name="photo" id="photo" class="opacity-0" @input="form.photo = $event.target.files[0]">
+                </form> -->
+                <button @click.stop="openImport()" class="text-white">Importar</button>
+                <modal :modal="isImport" @clicked="closeModal" @exceAction="exceAction">
+                    <template #action>
+                        <form @submit.prevent="importFile">
+                            <div>
+                                <label
+                                    class="flex flex-col w-full h-32 border-4 border-blue-200 border-dashed hover:bg-gray-100 hover:border-gray-300">
+                                    <div class="flex flex-col items-center justify-center pt-7">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-gray-400 group-hover:text-gray-600"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                        </svg>
+                                        <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">Attach a file</p>
+                                    </div>
+                                    <input type="file" class="opacity-0" @input="formImport.file = $event.target.files[0]"/>
+                                </label>
+                                <button type="submit" class="w-full mt-2 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Import</button>
+                            </div>
+                        </form>
+                    </template>
+                </modal>
             </div>
         </template>
         <div class="py-12 mt-1">
-            
-            
             <div class="mx-8 my-8">
                 <div class="flex flex-col">
                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -40,9 +62,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    
+
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" v-for="(product,index) in products.data" :key="index">
-                                            
+
                                             <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{product.name}}
                                             </td>
@@ -64,9 +86,9 @@
                                                     Habilitar
                                                 </a>
                                             </td>
-                                        
+
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -82,17 +104,44 @@
 </template>
 
 <script>
-import { Link, Head} from '@inertiajs/inertia-vue3';
+import { Link, Head, useForm} from '@inertiajs/inertia-vue3';
 import Pagination from '../../Components/Pagination';
+import Modal from '../../Components/Modal'
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 export default {
     components: {
         Link,
         Pagination,
+        Modal,
         Head,
         BreezeAuthenticatedLayout
 
     },
     props:['products','info'],
+    data(){
+        return{
+            formImport: useForm({
+                _method: 'put',
+                file: null,
+            }),
+            isImport: false,
+        }
+    },
+    methods:{
+        importFile() {
+            this.closeModal();
+            this.formImport.post(this.route('products.import'));
+        },
+        openImport(){
+            this.isImport = true;
+        },
+        closeModal(isImport){
+            this.isImport = isImport;
+        },
+        exceAction(isImport){
+            this.isImport = isImport;
+            console.log("entre aqui");
+        },
+    }
 }
 </script>

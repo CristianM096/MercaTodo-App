@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Webcheckout\WebcheckoutController;
 use App\Http\Controllers\Product\ProductClientController;
+use GuzzleHttp\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,9 +37,14 @@ Route::get('/dashboard', function () {
 
 Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('users', UserController::class)->middleware(['auth', 'verified']);
-    Route::resource('products',ProductController::class)->middleware(['auth','verified']);
+    Route::match(['put','patch'],'products/import',[ProductController::class,'import'])->name('products.import')->middleware(['auth','verified']);    
+    Route::match(['get','head'],'products/create',[ProductController::class,'create'])->name('products.create')->middleware(['auth','verified']);
+    Route::match(['get','head'],'products/{product}/edit',[ProductController::class,'edit'])->name('products.edit')->middleware(['auth','verified']);
+    Route::match(['get','head'],'products',[ProductController::class,'index'])->name('products.index')->middleware(['auth','verified']);
+    Route::match(['put','patch'],'products/{product}',[ProductController::class,'update'])->name('products.update')->middleware(['auth','verified']);
+    Route::post('/products/store',[ProductController::class,'store'])->name('products.store')->middleware(['auth','verified']);    
+    
 });
-
 
 
 Route::post('/cart', [CartController::class, 'store'])
@@ -57,5 +63,8 @@ Route::get('/dashboard/{product}',[ProductClientController::class,'show'])->name
 Route::post('/invoice/store', [InvoiceController::class,'store'])->name('invoice.store')->middleware((['auth','verified','role:Client|Admin']));
 Route::get('/invoice', [InvoiceController::class,'index'])->name('invoice.index')->middleware((['auth','verified','role:Client|Admin']));
 Route::get('/invoice/show{invoice}', [InvoiceController::class,'show'])->name('invoice.show')->middleware((['auth','verified','role:Client|Admin']));
+
+
+
 
 require __DIR__.'/auth.php';
