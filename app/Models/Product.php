@@ -80,7 +80,6 @@ class Product extends Model
         if (null === $priceMin || 0 > $priceMin) {
             return $query;
         } else {
-            //dd($priceMax);
             $query->where('price', ">", $priceMin);
             return $query;
         }

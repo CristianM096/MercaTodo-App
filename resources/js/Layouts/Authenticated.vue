@@ -31,6 +31,9 @@
                                 <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'||$page.props.auth.user.roles[0].name === 'Client'" :href="route('invoice.index')" :active="route().current('invoice.index')">
                                     Historial de Compras
                                 </BreezeNavLink>
+                                <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'||$page.props.auth.user.roles[0].name === 'Client'" :href="route('reportInvoices.index')" :active="route().current('reportInvoices.index')">
+                                    Reporte de Facturas
+                                </BreezeNavLink>
                             </div>
                         </div>
 

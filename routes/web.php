@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Webcheckout\WebcheckoutController;
 use App\Http\Controllers\Product\ProductClientController;
+use App\Http\Controllers\Report\InvoiceReportsController;
 use GuzzleHttp\Middleware;
 
 /*
@@ -47,6 +48,7 @@ Route::group(['middleware' => ['role:Admin']], function () {
     
 });
 
+Route::match(['get','head'],'reports/invoice',[InvoiceReportsController::class,'index'])->name('reportInvoices.index')->middleware(['auth','verified']);
 
 Route::post('/cart', [CartController::class, 'store'])
       ->name('cart.store')->middleware((['auth','verified','role:Client|Admin']));
