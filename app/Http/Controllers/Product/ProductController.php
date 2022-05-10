@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Exports\ProductsExport;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
@@ -104,9 +105,13 @@ class ProductController extends Controller
 
     public function import(Request $request): RedirectResponse
     {
-        //dd($request);
         $file = $request->file;
         Excel::import(new ProductsImport, $file);
         return Redirect::route('products.index');
+    }
+    public function export()
+    {
+        return Excel::download(new ProductsExport(), 'product_export.csv',null, ['X-Vapor-Base64-Encode' => 'True']);
+        
     }
 }

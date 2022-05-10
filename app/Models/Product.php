@@ -26,6 +26,8 @@ class Product extends Model
 
     protected $with = ['category'];
 
+    protected $casts = ['active' => 'boolean',];
+
     protected $fillable = [
         'name',
         'price',

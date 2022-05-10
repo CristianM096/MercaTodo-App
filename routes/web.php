@@ -37,7 +37,8 @@ Route::get('/dashboard', function () {
 
 Route::group(['middleware' => ['role:Admin']], function () {
     Route::resource('users', UserController::class)->middleware(['auth', 'verified']);
-    Route::match(['put','patch'],'products/import',[ProductController::class,'import'])->name('products.import')->middleware(['auth','verified']);    
+    Route::match(['put','patch'],'products/import',[ProductController::class,'import'])->name('products.import')->middleware(['auth','verified']);
+    Route::get('products/export',[ProductController::class,'export'])->name('products.export')->middleware(['auth','verified']);
     Route::match(['get','head'],'products/create',[ProductController::class,'create'])->name('products.create')->middleware(['auth','verified']);
     Route::match(['get','head'],'products/{product}/edit',[ProductController::class,'edit'])->name('products.edit')->middleware(['auth','verified']);
     Route::match(['get','head'],'products',[ProductController::class,'index'])->name('products.index')->middleware(['auth','verified']);

@@ -20,6 +20,7 @@ class ProductsImport implements ToModel,WithHeadingRow
     public function model(array $row)
     {
         $faker = Faker::create();
+        dump($row);
         return new Product([
             'name' => Arr::get($row,'name'),
             'price' => Arr::get($row,'price'),
@@ -30,7 +31,17 @@ class ProductsImport implements ToModel,WithHeadingRow
             'color' => Arr::get($row,'color'),
             'weight' => Arr::get($row,'weight'),
             'size' => Arr::get($row,'size'),
-            'active' => Arr::get($row,'active'),
+            'active' => (function($row)
+                { 
+                    $response = Arr::get($row,'active',0);
+                    if(null === $response){
+                        dump($response);
+                        return false;
+                        
+                    }
+                    dump($response);
+                    return true;
+                })($row),
             'category_id' => Arr::get($row,'category_id'),
         ]);
     }
