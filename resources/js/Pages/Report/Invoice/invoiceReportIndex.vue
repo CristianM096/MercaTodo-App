@@ -11,7 +11,7 @@
         <div class="max-w-4xl mt-10 flex justify-center mx-auto rounded overflow-hidden shadow-lg">
             
             <img width="200" class="m-4 w-1/3" src="http://127.0.0.1:8000/storage/img/pdf.svg" alt="">
-            <form @submit.prevent="submit" class="w-2/3">
+            <form @submit.prevent="submit" action="generate" ref="form" class="w-2/3">
                 <div class="grid grid-cols-1 gap-3 justify-items-center">
                     <div class="w-full">
                         <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-sky-600 bg-sky-200 uppercase last:mr-0 mr-1">
@@ -48,7 +48,7 @@ import { Link, Head, useForm} from '@inertiajs/inertia-vue3';
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
 import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
 
-export default {
+export default{
     components: {
         Link,
         Head,
@@ -63,16 +63,31 @@ export default {
     data(){
         return{
             form: useForm({
-                _method:'put',
+                _method: 'put',
                 initialDate: this.$props.initialDate,
                 endDate: this.$props.endDate,
             }),
         }
     },
     methods: {
-        submit(){
-            this.form.post(this.route('reportInvoices.generate'))
+        // submit(){
+        //     this.form.get(this.route('reportInvoices.generate'))
+        // },
+        submit: function(){
+            this.$refs.form.submit();
         },
+        // submit(){
+        //     axios.put(route("reportInvoices.generate"),{initialDate: this.form.initialDate,endDate:this.form.endDate}).then((response)=>{
+        //         console.log(response);
+        //         console.log(response.config.url)
+        //         window.location.=response.config.url;
+        //     }).catch((exception)=>{
+        //         Toast.fire({
+        //             icon: 'error',
+        //             title: 'Ocurrio un error al procesar el pago'
+        //         });
+        //     })
+        // },  
     },
 }
 </script>

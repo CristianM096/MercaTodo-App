@@ -8,11 +8,17 @@ use App\Models\Invoice;
 use Carbon\Carbon;
 use Inertia\Inertia;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Facade\FlareClient\Http\Response as HttpResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response as IlluminateHttpResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response as FacadesResponse;
+use Inertia\Response;
+use SebastianBergmann\Type\TypeName;
 
 class InvoiceReportsController extends Controller
 {
-    public function index()
+    public function index() : Response
     {
         $initialDate = Carbon::now()->format('Y-m-d');
         $endDate = Carbon::tomorrow()->format('Y-m-d');
@@ -21,24 +27,26 @@ class InvoiceReportsController extends Controller
 
     public function generate(InvoiceReportRequest $request)
     {
+        
         $initialDate = $request->initialDate;
         $endDate = $request->endDate;
         $data = Invoice::where('updated_at','>=',$initialDate)
-                ->groupBy('payment_status')
                 ->where('payment_status','=','APPROVED')
                 ->where('updated_at','<=',$endDate)
                 ->select(DB::raw('Date(updated_at) as date'),DB::raw('Sum(total) as total'))->groupBy('date')
                 ->get();
         $data = $data->all();
-        return view('Report.Invoice.invoiceReportShow')
-            ->with(['data'=> $data,
-                'initialDate'=> $initialDate,
-                'endDate' => $endDate,
-                'date' => Carbon::now()->format('Y-m-d'),
-            ]);
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->getDomPDF()->set_option("enable_php", true);
         
-        $pdf = PDF::loadView('Report.Invoice.invoiceReportShow', $data->all());
-        dd($pdf);
-        return $pdf->download('invoice.pdf');
+        $pdf = PDF::loadView('Report/Invoice/invoiceReportShow',
+        [
+            'data'=> $data,
+            'initialDate'=> $initialDate,
+            'endDate' => $endDate,
+            'date' => Carbon::now()->format('Y-m-d'),
+        ]);
+        return $pdf->stream('archivo.pdf');
     }
 }

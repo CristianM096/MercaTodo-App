@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Document</title>
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
@@ -11,15 +11,15 @@
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body>
-    <!-- Cabecera-->
+    @if (count($data) > 0)
     <div>
         <div class="flex justify-between m-10">
-            <div>
-                <h1 class="">Logo</h1>
-                <h1 class="">Mercatodo</h1>
+            <div class="flex">
+                <img width="50" src="http://127.0.0.1:8000/storage/img/logo.svg" alt="">
+                <h1 class="font-semibold text-4xl">Mercatodo</h1>
             </div>
             <div>
-                <p class="text-red-500">No. Factura: 0001</p>
+                <p class="text-red-500">No. Reporte: 0001</p>
                 <p class="font-semibold">Fecha: {{$date}}</p>
             </div>
         </div>
@@ -34,7 +34,6 @@
             </div>
         </div>
     </div>
-    <!-- Cuerpo -->
     <div class="flex flex-col">
         <table class="mx-10 divide-y divide-gray-200 table-fixed dark:divide-gray-700">
             <thead class="bg-gray-100 dark:bg-gray-700">
@@ -87,9 +86,8 @@
             </tfoot>
         </table>
     </div>
-    <!--Pie de Pagina-->
-    <div class="min-w-full bg-black flex">
-
-    </div>
+    @else
+        <h1>NO HAY DATOS PARA MOSTRAR</h1>
+    @endif
 </body>
 </html>

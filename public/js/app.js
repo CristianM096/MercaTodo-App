@@ -20530,9 +20530,24 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // submit(){
+    //     this.form.get(this.route('reportInvoices.generate'))
+    // },
     submit: function submit() {
-      this.form.post(this.route('reportInvoices.generate'));
-    }
+      this.$refs.form.submit();
+    } // submit(){
+    //     axios.put(route("reportInvoices.generate"),{initialDate: this.form.initialDate,endDate:this.form.endDate}).then((response)=>{
+    //         console.log(response);
+    //         console.log(response.config.url)
+    //         window.location.=response.config.url;
+    //     }).catch((exception)=>{
+    //         Toast.fire({
+    //             icon: 'error',
+    //             title: 'Ocurrio un error al procesar el pago'
+    //         });
+    //     })
+    // },  
+
   }
 });
 
@@ -24729,6 +24744,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onSubmit: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return $options.submit && $options.submit.apply($options, arguments);
         }, ["prevent"])),
+        action: "generate",
+        ref: "form",
         "class": "w-2/3"
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         name: "initialDate",
@@ -24750,8 +24767,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.endDate]])])]), _hoisted_13])], 32
-      /* HYDRATE_EVENTS */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.endDate]])])]), _hoisted_13])], 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
       )])];
     }),
     _: 1
