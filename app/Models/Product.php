@@ -29,6 +29,7 @@ class Product extends Model
     protected $casts = ['active' => 'boolean',];
 
     protected $fillable = [
+        'id',
         'name',
         'price',
         'discount',

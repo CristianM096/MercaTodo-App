@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Imports\ProductsImport;
+use App\Jobs\ProductExportJob;
 use Maatwebsite\Excel\Facades\Excel;
 
 use function PHPSTORM_META\type;
@@ -111,7 +112,7 @@ class ProductController extends Controller
     }
     public function export()
     {
-        return Excel::download(new ProductsExport(), 'product_export.csv',null, ['X-Vapor-Base64-Encode' => 'True']);
-        
+        (new ProductsExport)->store('public/files/productExport.csv');
+        return back()->withSuccess('Export started!');
     }
 }

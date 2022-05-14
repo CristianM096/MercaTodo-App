@@ -8,8 +8,11 @@ use App\Models\ProductCategory;
 use Illuminate\Support\Arr;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Faker\Factory as Faker;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithUpserts;
 
-class ProductsImport implements ToModel,WithHeadingRow
+class ProductsImport implements ToModel,WithHeadingRow,WithChunkReading, ShouldQueue, WithUpserts
 {
 
     /**
@@ -19,29 +22,30 @@ class ProductsImport implements ToModel,WithHeadingRow
     */
     public function model(array $row)
     {
-        $faker = Faker::create();
         return new Product([
+            'id' => Arr::get($row,'id'),
             'name' => Arr::get($row,'name'),
             'price' => Arr::get($row,'price'),
             'discount' => Arr::get($row,'discount'),
-            'photo' => $faker->image($dir = 'storage/productImages', $width = 640, $height = 480),
+            'photo' => Arr::get($row,'photo') ? Arr::get($row,'photo') : "blank.jpg",
             'description' => Arr::get($row,'description'),
             'stock' => Arr::get($row,'stock'),
             'color' => Arr::get($row,'color'),
             'weight' => Arr::get($row,'weight'),
             'size' => Arr::get($row,'size'),
             'active' => Arr::get($row,'active') ? true : false,
-            // 'active' => (function($row)
-            //     {
-            //         $response = Arr::get($row,'active',0);
-            //         if(null === $response){
-            //             dump($response);
-            //             return false;
-            //         }
-            //         dump($response);
-            //         return true;
-            //     })($row),
             'category_id' => Arr::get($row,'category_id'),
         ]);
     }
+
+    public function uniqueBy()
+    {
+        return ['id'];
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
+    }
+
 }
