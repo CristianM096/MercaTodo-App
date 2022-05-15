@@ -70,24 +70,9 @@ export default{
         }
     },
     methods: {
-        // submit(){
-        //     this.form.get(this.route('reportInvoices.generate'))
-        // },
         submit: function(){
             this.$refs.form.submit();
         },
-        // submit(){
-        //     axios.put(route("reportInvoices.generate"),{initialDate: this.form.initialDate,endDate:this.form.endDate}).then((response)=>{
-        //         console.log(response);
-        //         console.log(response.config.url)
-        //         window.location.=response.config.url;
-        //     }).catch((exception)=>{
-        //         Toast.fire({
-        //             icon: 'error',
-        //             title: 'Ocurrio un error al procesar el pago'
-        //         });
-        //     })
-        // },  
     },
 }
 </script>

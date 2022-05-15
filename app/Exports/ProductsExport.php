@@ -18,7 +18,7 @@ class ProductsExport implements FromCollection,FromQuery,ShouldQueue
     */
     public function collection()
     {
-        $products = Product::all(['id','name','price','discount','photo','description','stock','color','weight','size','active','category_id'])->take(11);
+        $products = Product::all(['id','name','price','discount','photo','description','stock','color','weight','size','active','category_id']);
         $products->prepend(['id','name','price','discount','photo','description','stock','color','weight','size','active','category_id']);
         //$products->prepend(['id,name,price,discount,photo,description,stock,color,weight,size,active,category_id']);
         
@@ -26,7 +26,7 @@ class ProductsExport implements FromCollection,FromQuery,ShouldQueue
     }
     public function query()
     {
-        $products = Product::all(['id','name','price','discount','photo','description','stock','color','weight','size','active','category_id'])->take(11);
+        $products = Product::all(['id','name','price','discount','photo','description','stock','color','weight','size','active','category_id']);
         $products->prepend(['id','name','price','discount','photo','description','stock','color','weight','size','active','category_id']);
         //$products->prepend(['id,name,price,discount,photo,description,stock,color,weight,size,active,category_id']);
         

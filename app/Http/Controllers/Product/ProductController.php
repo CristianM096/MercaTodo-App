@@ -28,7 +28,6 @@ class ProductController extends Controller
     public function index(Request $request): Response
     {
         $products = Product::paginate(12);
-
         if (Arr::has($request->session()->all(), 'message')) {
             $info = $request->session()->all()['message'];
 

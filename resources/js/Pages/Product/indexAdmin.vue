@@ -9,13 +9,14 @@
                     Lista de Productos
                 </h2>
                 <a :href="route('products.create')" type="button"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-6 border border-blue-700 rounded ">
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                     Crear
                 </a>
-                <!-- <form @submit.prevent="importFile" >
-                    <input type="file" name="photo" id="photo" class="opacity-0" @input="form.photo = $event.target.files[0]">
-                </form> -->
-                <button @click.stop="openImport()" class="text-white">Importar</button>
+                <a :href="route('reportInvoices.generate')" type="button"
+                    class="bg-emerald-700 hover:bg-emerald-900 text-white font-bold py-2 px-4 border border-green-700 rounded">
+                    Export
+                </a>
+                <button @click.stop="openImport()" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold px-4 border border-gray-400 rounded shadow">Importar</button>
                 <modal :modal="isImport" @clicked="closeModal" @exceAction="exceAction">
                     <template #action>
                         <form @submit.prevent="importFile">
@@ -45,7 +46,7 @@
                     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
                             <div class="overflow-hidden shadow-md sm:rounded-lg">
-                                <table class="min-w-full">
+                                <table class="min-w-full table-auto">
                                     <thead class="bg-gray-50 dark:bg-gray-700">
                                         <tr>
                                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
@@ -58,14 +59,15 @@
                                                 Imagen
                                             </th>
                                             <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                                Cualquier Cosa
+                                                Activo
+                                            </th>   
+                                            <th scope="col" class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                                Actualizar
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" v-for="(product,index) in products.data" :key="index">
-
                                             <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{product.name}}
                                             </td>
@@ -78,13 +80,18 @@
                                                 </span>
                                             </td>
                                             <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                <div class="text-green-500" v-if="product.active">
+                                                    Activo
+                                                </div>
+                                                <div class="text-red-500" v-if="!product.active">
+                                                    Inactivo
+                                                </div>
+
+                                            </td>
+                                            <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                 <a :href="route('products.edit',product.id)" type="button"
                                                     class="bg-amber-500 hover:bg-amber-700 text-white font-bold py-2 px-4 border border-amber-700 rounded">
                                                     Editar
-                                                </a>
-                                                <a :href="route('products.edit',product.id)" type="button"
-                                                    class="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 border border-emerald-700 rounded">
-                                                    Habilitar
                                                 </a>
                                             </td>
 
@@ -97,8 +104,6 @@
                     </div>
                 </div>
             </div>
-
-
             <pagination class="mt-6 flex justify-center" :links="products.links" />
         </div>
     </BreezeAuthenticatedLayout>
