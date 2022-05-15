@@ -46,14 +46,11 @@ Route::group(['middleware' => ['role:Admin']], function () {
     Route::match(['get','head'],'products',[ProductController::class,'index'])->name('products.index')->middleware(['auth','verified']);
     Route::match(['put','patch'],'products/{product}',[ProductController::class,'update'])->name('products.update')->middleware(['auth','verified']);
     Route::post('/products/store',[ProductController::class,'store'])->name('products.store')->middleware(['auth','verified']);    
-
-    // Route::put('reports/generate',[InvoiceReportsController::class,'generate'])->name('reportInvoices.generate')->middleware(['auth','verified']);
+    Route::match(['get','head'],'products/{product}',[ProductController::class,'show'])->name('products.show')->middleware(['auth','verified']);
+    
     Route::match(['get','head'],'reports/invoice',[InvoiceReportsController::class,'index'])->name('reportInvoices.index')->middleware(['auth','verified']);
     Route::get('reports/generate',[InvoiceReportsController::class,'generate'])->name('reportInvoices.generate')->middleware(['auth','verified']);
-    // Route::get('reports/pdf',function(){
-    //     $pdf = Pdf::loadView('Report.Invoice.invoiceReportShow');
-    //     return $pdf->download('archivo.pdf');
-    // });
+    
 });
 
 

@@ -104,6 +104,11 @@ class ProductController extends Controller
         return Redirect::route('products.index');
     }
 
+    public function show(Product $product): Response
+    {
+        return Inertia::render('Product/showAdmin',compact('product'));
+    }
+
     public function import(Request $request): RedirectResponse
     {
         $file = $request->file;
