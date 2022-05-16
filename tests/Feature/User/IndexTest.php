@@ -47,16 +47,20 @@ class IndexTest extends TestCase
             'password' => Hash::make('12345678'),
             'remember_token' => Str::random(10),
         ])->assignRole('Admin');
-        
+
         $users = User::factory(10)->create();
         $this->actingAs($user);
         $response = $this->get(route('users.index'));
         $response->assertStatus(200);
         $content = $response->getOriginalContent();
 
-        $response->assertInertia(fn (Assert $page)=> $page
+        $response->assertInertia(
+            fn (Assert $page) => $page
             ->component('Users/index')
-            ->has('users',11,fn (Assert $page) => $page
+            ->has(
+                'users',
+                11,
+                fn (Assert $page) => $page
                 ->whereAll([
                     'id' => 1,
                     'nid' => null,
@@ -72,7 +76,7 @@ class IndexTest extends TestCase
         );
 
         $users = $content['page']['props']['users'];
-        $this->assertEquals($user->id,$users[0]['id']);
-        $this->assertEquals(count($users),11);
+        $this->assertEquals($user->id, $users[0]['id']);
+        $this->assertEquals(count($users), 11);
     }
 }

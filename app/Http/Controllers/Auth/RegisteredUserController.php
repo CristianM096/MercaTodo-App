@@ -21,7 +21,9 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Auth/Register', [
+            'background' => url('/storage/img/'.'Night-Sky.jpg'),
+        ]);
     }
 
     /**

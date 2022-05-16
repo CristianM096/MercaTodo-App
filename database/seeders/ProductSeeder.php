@@ -23,7 +23,7 @@ class ProductSeeder extends Seeder
 
         Product::factory(30)
             ->make()
-            ->each(function (Product $product) use ($user){
+            ->each(function (Product $product) use ($user) {
                 //$product->user()->associate($user);
                 $product->category()->associate(ProductCategory::inRandomOrder()->first());
                 $product->save();

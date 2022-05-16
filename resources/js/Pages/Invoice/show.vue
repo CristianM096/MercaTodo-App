@@ -4,7 +4,7 @@
     <BreezeAuthenticatedLayout>
         <template #header>
             <div class="flex justify-between">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <h2 class="font-semibold text-xl leading-tight">
                     Historial de Compras
                 </h2>                
             </div>

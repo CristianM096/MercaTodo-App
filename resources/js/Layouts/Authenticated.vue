@@ -1,45 +1,50 @@
 <template>
     <div>
         <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+            <nav class="bg-[#1d2541] border-transparent border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('productsClient.index')">
+                                <Link class="flex items-center" :href="route('productsClient.index')">
                                     <BreezeApplicationLogo class="block h-9 w-auto" />
+                                    <h3 class="text-white"> Mercatodo</h3>
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink v-if="$page.props.auth.user.roles[0].name === 'Client'||$page.props.auth.user.roles[0].name === 'Admin'" :href="route('productsClient.index')" :active="route().current('productsClient.index')">
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex" >
+                                <BreezeNavLink  class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Client'||$page.props.auth.user.roles[0].name === 'Admin'" :href="route('productsClient.index')" :active="route().current('productsClient.index')">
                                     Dashboard
                                 </BreezeNavLink>
-                                <BreezeNavLink v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('users.index')" :active="route().current('users.index')">
+                                <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('users.index')" :active="route().current('users.index')">
                                     Listar Usuarios
                                 </BreezeNavLink>
-                                <BreezeNavLink v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('products.index')" :active="route().current('products.index')">
+                                <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('products.index')" :active="route().current('products.index')">
                                     Listar Productos
                                 </BreezeNavLink>
-                                <BreezeNavLink v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('products.create')" :active="route().current('products.create')">
+                                <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('products.create')" :active="route().current('products.create')">
                                     Crear Productos
                                 </BreezeNavLink>
-                                <BreezeNavLink v-if="$page.props.auth.user.roles[0].name === 'Admin'||$page.props.auth.user.roles[0].name === 'Client'" :href="route('invoice.index')" :active="route().current('invoice.index')">
+                                <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'||$page.props.auth.user.roles[0].name === 'Client'" :href="route('invoice.index')" :active="route().current('invoice.index')">
                                     Historial de Compras
                                 </BreezeNavLink>
+                                <BreezeNavLink class="text-[#c7d8ff] focus:text-white hover:text-white" v-if="$page.props.auth.user.roles[0].name === 'Admin'" :href="route('reportInvoices.index')" :active="route().current('reportInvoices.index')">
+                                    Reporte de Facturas
+                                </BreezeNavLink>
+                                
                             </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
                             <div class="ml-3 relative">
-                                <BreezeDropdown align="right" width="48">
+                                <BreezeDropdown  align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
-                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                            <button type="button" class="bg-[#041C32] inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-white hover:text-yellow-400 focus:outline-none transition ease-in-out duration-150">
                                                 {{ $page.props.auth.user.first_name }}
 
                                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -64,6 +69,9 @@
                                         </BreezeDropdownLink>
                                         <BreezeDropdownLink :href="route('productsClient.index')"  as="button">
                                             Dashboard
+                                        </BreezeDropdownLink>
+                                        <BreezeDropdownLink :href="route('products.download')" v-if="$page.props.auth.user.roles[0].name === 'Admin'"  as="button">
+                                            Descargas
                                         </BreezeDropdownLink>
                                     </template>
                                 </BreezeDropdown>
@@ -113,8 +121,8 @@
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <header class="bg-black border-transparent shadow" v-if="$slots.header">
+                <div class="text-white max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
             </header>
