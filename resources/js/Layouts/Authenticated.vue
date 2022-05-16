@@ -58,13 +58,13 @@
                                         <BreezeDropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </BreezeDropdownLink>
-                                        <BreezeDropdownLink :href="route('users.index')" as="button">
+                                        <BreezeDropdownLink :href="route('users.index')" v-if="$page.props.auth.user.roles[0].name === 'Admin'" as="button">
                                             List User
                                         </BreezeDropdownLink>
-                                        <BreezeDropdownLink :href="route('products.index')" as="button">
+                                        <BreezeDropdownLink :href="route('products.index')" v-if="$page.props.auth.user.roles[0].name === 'Admin'" as="button">
                                             List Products
                                         </BreezeDropdownLink>
-                                        <BreezeDropdownLink :href="route('products.create')" as="button">
+                                        <BreezeDropdownLink :href="route('products.create')" v-if="$page.props.auth.user.roles[0].name === 'Admin'" as="button">
                                             Create Products
                                         </BreezeDropdownLink>
                                         <BreezeDropdownLink :href="route('productsClient.index')"  as="button">
