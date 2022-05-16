@@ -35,7 +35,7 @@ class ProductController extends Controller
         event(new Registered($product));
 
         return new ProductResource($product);
-    }   
+    }
 
     public function update(UpdateApiProductRequest $request, Product $product): ProductResource
     {

@@ -39,14 +39,7 @@
                         type="number" 
                         placeholder="Search by Max Price" 
                         v-model="form.filterMaxPrice">
-                    </div><!--
-                    <div class="w-full md:w-1/2 px-3">
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" 
-                        id="grid-category" 
-                        type="text" 
-                        placeholder="Search by Category" 
-                        v-model="form.filterCategory">
-                    </div>-->
+                    </div>
                     <div>
                         <button type='submit' 
                             class="px-4 py-2 text-white bg-green-500 rounded shadow-xl" 
@@ -65,7 +58,7 @@
                     <main class="my-4">
                         <div class="container mx-auto px-6">
                             
-                            <featured :featured="featured"></featured>
+                            <featured v-if="featured != null" :featured="featured"></featured>
                             <div class="mt-16">
                                 <h3 class="text-gray-600 text-2xl font-medium">More Products</h3>
                                 <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
@@ -126,10 +119,9 @@ export default {
     data(){
         return{
             form: this.$inertia.form({
-                filterName: '',
-                filterMinPrice: '',
-                filterMaxPrice: '',
-                filterCategory: '',
+                filterName: this.$props.filter.filterName,
+                filterMinPrice: this.$props.filter.filterMinPrice,
+                filterMaxPrice: this.$props.filter.filterMaxPrice,
             }),
             formCart: useForm({
                 product: Object,
@@ -141,12 +133,11 @@ export default {
         products: Object,
         featured: Object,
         qtyCart: Number,
+        filter: Array,
     },
     methods:{
         submit() {
-            this.form.get(this.route('productsClient.index'),
-                this.form
-            )
+            this.form.get(this.route('productsClient.index'))
         },
         addCart(product){
             this.formCart.product = product;

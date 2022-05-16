@@ -46,7 +46,7 @@ class Product extends Model
     public function getPhotoAttribute()
     {
         $name = $this->getImageName();
-        return url('/storage/productImages/'.$name);
+        return url('/storage/productImages/'.$this->attributes['photo']);
     }
     public function getImageName()
     {

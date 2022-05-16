@@ -20,11 +20,11 @@ use SebastianBergmann\Type\TypeName;
 
 class InvoiceReportsController extends Controller
 {
-    public function index() : Response
+    public function index(): Response
     {
         $initialDate = Carbon::now()->format('Y-m-d');
         $endDate = Carbon::tomorrow()->format('Y-m-d');
-        return Inertia::Render('Report/Invoice/invoiceReportIndex',compact('initialDate','endDate'));
+        return Inertia::Render('Report/Invoice/invoiceReportIndex', compact('initialDate', 'endDate'));
     }
 
     public function generate(InvoiceReportRequest $request)

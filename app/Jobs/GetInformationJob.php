@@ -34,7 +34,6 @@ class GetInformationJob implements ShouldQueue
      */
     public function handle(GetInformationAction $getInformationAction)
     {
-        
         return $getInformationAction->handle();
     }
 }

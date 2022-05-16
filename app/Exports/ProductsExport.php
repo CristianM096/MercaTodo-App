@@ -8,9 +8,8 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
 
-class ProductsExport implements FromCollection,FromQuery,ShouldQueue
+class ProductsExport implements FromCollection, FromQuery, ShouldQueue
 {
-
     use Exportable;
 
     /**
@@ -20,16 +19,12 @@ class ProductsExport implements FromCollection,FromQuery,ShouldQueue
     {
         $products = Product::all(['id','name','price','discount','photo','description','stock','color','weight','size','active','category_id']);
         $products->prepend(['id','name','price','discount','photo','description','stock','color','weight','size','active','category_id']);
-        //$products->prepend(['id,name,price,discount,photo,description,stock,color,weight,size,active,category_id']);
-        
         return $products;
     }
     public function query()
     {
         $products = Product::all(['id','name','price','discount','photo','description','stock','color','weight','size','active','category_id']);
         $products->prepend(['id','name','price','discount','photo','description','stock','color','weight','size','active','category_id']);
-        //$products->prepend(['id,name,price,discount,photo,description,stock,color,weight,size,active,category_id']);
-        
         return $products;
     }
 }

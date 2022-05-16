@@ -13,7 +13,7 @@ use App\Models\Invoice;
 
 class CreateSessionAction
 {
-    public function handle(): ? String
+    public function handle(): ?String
     {
         $request = Cart::Content()->toArray();
         $sessionData = $this->getSessionData($request);
@@ -22,15 +22,14 @@ class CreateSessionAction
         $processUrl = null;
         if ('OK'===$session->status->status) {
             (new CartController())->destroy();
-            $invoice = $this->createInvoice($sessionData,$session,$products);
+            $invoice = $this->createInvoice($sessionData, $session, $products);
             (new InvoiceController())->store($invoice);
             $processUrl = $session->processUrl;
-            
         }
         return $processUrl ?? null;
     }
 
-    private function createInvoice(array $sessionData,object $session, array $products): Request
+    private function createInvoice(array $sessionData, object $session, array $products): Request
     {
         $invoice = (new Request());
         $invoice->setMethod('post');
@@ -45,7 +44,7 @@ class CreateSessionAction
         ]);
         return $invoice;
     }
-    
+
     private function getProductCart(array $data): array
     {
         $products = array();

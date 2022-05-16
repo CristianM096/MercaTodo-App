@@ -18,6 +18,4 @@ class PaymentStatus implements Arrayable
             self::REJECTED,
         ];
     }
-
-
 }

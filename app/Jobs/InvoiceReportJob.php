@@ -19,7 +19,10 @@ use PhpParser\Node\Expr\Cast\String_;
 
 class InvoiceReportJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     private String $initialDate;
     private String $endDate;
@@ -42,6 +45,6 @@ class InvoiceReportJob implements ShouldQueue
      */
     public function handle(InvoiceReportAction $invoiceReportAction)
     {
-        return $invoiceReportAction->handle($this->initialDate,$this->endDate);
+        return $invoiceReportAction->handle($this->initialDate, $this->endDate);
     }
 }

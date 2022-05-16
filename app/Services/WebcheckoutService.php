@@ -31,7 +31,7 @@ class WebcheckoutService implements WebcheckoutContract
         $url = $createSessionRequest::url(null);
         return $this->request($data, $url);
     }
-    
+
     private function request(array $data, string $url)
     {
         $response = $this->client->request('post', $url, [

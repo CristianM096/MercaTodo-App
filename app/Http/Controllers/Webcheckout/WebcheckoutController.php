@@ -30,43 +30,4 @@ class WebcheckoutController extends Controller
         $processUrl = $createSessionAction->handle();
         return response()->json(['processUrl'=>$processUrl]);
     }
-
-    
-
-    private function getProductCart(array $data): array
-    {
-        $products = array();
-        foreach ($data as $element) {
-            $products[$element['id']]=[
-                'quantity' => $element['qty'],
-                'price' => $element['price'],
-                'subtotal' => $element['subtotal'],
-            ];
-        }
-        return $products;
-    }
-
-    private function getSessionData(array $data): array
-    {
-        $description='';
-        $total = 0;
-        foreach ($data as $element) {
-            $description = $description.'----'.'name:'.$element['name'].' cuantity:'.$element['qty'].' price:'.$element['price'];
-            $total += $element['subtotal'];
-        }
-        $reference = Str::random(10);
-        $amount = [
-            'currency' => 'COP',
-            'total' => $total,
-        ];
-        return [
-            'payment' => [
-                'reference' => $reference,
-                'description' => $description,
-                'amount' => $amount
-            ],
-            'returnUrl' => 'http://127.0.0.1:8000/invoice',
-            'expiration' => date('c', strtotime('+10 minutes')),
-        ];
-    }
 }

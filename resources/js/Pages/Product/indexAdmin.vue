@@ -12,7 +12,7 @@
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                     Crear
                 </a>
-                <a :href="route('reportInvoices.generate')" type="button"
+                <a :href="route('products.export')" type="button"
                     class="bg-emerald-700 hover:bg-emerald-900 text-white font-bold py-2 px-4 border border-green-700 rounded">
                     Export
                 </a>

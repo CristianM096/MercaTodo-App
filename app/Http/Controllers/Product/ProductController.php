@@ -105,18 +105,18 @@ class ProductController extends Controller
 
     public function show(Product $product): Response
     {
-        return Inertia::render('Product/showAdmin',compact('product'));
+        return Inertia::render('Product/showAdmin', compact('product'));
     }
 
     public function import(Request $request): RedirectResponse
     {
         $file = $request->file;
-        Excel::import(new ProductsImport, $file);
+        Excel::import(new ProductsImport(), $file);
         return Redirect::route('products.index');
     }
     public function export()
     {
-        (new ProductsExport)->store('public/files/productExport.csv');
+        (new ProductsExport())->store('public/files/productExport.csv');
         return back()->withSuccess('Export started!');
     }
 }

@@ -13,7 +13,7 @@ class GetInformationAction
         $invoices = Invoice::where('payment_status', '=', 'PENDING')->get();
         foreach ($invoices as $invoice) {
             $payment_status = (new WebcheckoutService())->getInformation($invoice->reference);
-            if($payment_status->status->status !== PaymentStatus::PENDING){
+            if ($payment_status->status->status !== PaymentStatus::PENDING) {
                 $response = $invoice->update([
                     'payment_status' => $payment_status->status->status,
                 ]);

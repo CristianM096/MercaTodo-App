@@ -18,7 +18,7 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->decimal('total', 10, 2);
             $table->string('reference');
-            $table->enum('payment_status', (new PaymentStatus)->toArray());
+            $table->enum('payment_status', (new PaymentStatus())->toArray());
             $table->string('payment_url');
             $table->foreignId('customer_id');
             $table->foreign('customer_id')

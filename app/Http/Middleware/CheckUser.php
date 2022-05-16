@@ -21,15 +21,8 @@ class CheckUser
     {
         $response = $next($request);
         if (Auth::check() && auth()->user()->active == 0) {
-            // usuario con sesión iniciada pero inactivo
-        
-            // cerramos su sesión
             Auth::guard()->logout();
-        
-            // invalidamos su sesión
             $request->session()->invalidate();
-        
-            // redireccionamos a donde queremos
             return Inertia::render('Auth/Login', [
                 'status' => session('Fallo'),
                 'background' => url('/storage/img/'.'Night-Sky.jpg'),
