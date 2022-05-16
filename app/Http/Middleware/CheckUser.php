@@ -24,7 +24,7 @@ class CheckUser
             Auth::guard()->logout();
             $request->session()->invalidate();
             return Inertia::render('Auth/Login', [
-                'status' => session('Fallo'),
+                'status' => "Usuario inactivo, por favor contacte al administrador",
                 'background' => url('/storage/img/'.'Night-Sky.jpg'),
             ]);
         }

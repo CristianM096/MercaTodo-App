@@ -111,12 +111,12 @@ class ProductController extends Controller
     public function import(Request $request): RedirectResponse
     {
         $file = $request->file;
-        Excel::import(new ProductsImport(), $file);
+        Excel::queueImport(new ProductsImport, $file);
         return Redirect::route('products.index');
     }
     public function export()
     {
         (new ProductsExport())->store('public/files/productExport.csv');
-        return back()->withSuccess('Export started!');
+        return Redirect::route('products.index');
     }
 }

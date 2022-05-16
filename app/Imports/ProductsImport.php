@@ -9,11 +9,12 @@ use Illuminate\Support\Arr;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Faker\Factory as Faker;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithUpsertColumns;
 use Maatwebsite\Excel\Concerns\WithUpserts;
 
-class ProductsImport implements ToModel, WithHeadingRow, WithChunkReading, ShouldQueue, WithUpserts, WithUpsertColumns
+class ProductsImport implements ToModel, WithBatchInserts, WithHeadingRow, WithChunkReading, ShouldQueue, WithUpserts, WithUpsertColumns
 {
     /**
     * @param array $row
@@ -52,4 +53,10 @@ class ProductsImport implements ToModel, WithHeadingRow, WithChunkReading, Shoul
     {
         return 1000;
     }
+
+    public function batchSize(): int
+    {
+        return 1000;
+    }
+    
 }
